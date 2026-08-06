@@ -1,0 +1,82 @@
+
+
+tr, td {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+}
+
+table {
+    border-collapse: collapse;
+    min-width: 256px;
+    min-height: 256px;
+}
+
+.red {
+    background-color: red;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.green {
+    background-color: green;
+}
+
+.turquoise {
+    background-color: turquoise;
+}
+
+.cyan {
+    background-color: cyan;
+}
+
+.blue {
+    color:white;
+    background-color: blue;
+}
+
+.indigo {
+    color:white;
+    background-color: indigo;
+}
+
+.violet {
+    background-color: violet;
+}
+
+.purple {
+    color:white;
+    background-color: purple;
+}
+
+.pink {
+    background-color: pink;
+}
+
+.brown {
+    color:white;
+    background-color: brown;
+}
+
+.gold {
+    background-color: gold;
+}
+
+.silver {
+    background-color: silver;
+}
+
+.white {
+    background-color: white;
+}
+
+.black {
+    color:white;
+    background-color: black;
+}
