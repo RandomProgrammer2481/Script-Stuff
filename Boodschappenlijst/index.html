@@ -7,7 +7,7 @@
     <title>Boodschappenlijst</title>
 </head>
 <body>
-    <table>
+    <table id="groceryList">
         <thead>
             <th>Product</th>
             <th>Prijs</th>
@@ -16,33 +16,34 @@
         </thead>
         <tr>
             <td>Rijst</td>
-            <td class="price" >1.00</td>
-            <td>1</td>
-            <td class="price" >1.00</td>
+            <td class="productPrice" >1.00</td>
+            <td><input class="productQuantity" type="number" placeholder="0" min="0" max="999"></td>
+            <td class="productTotalCost" >0.00</td>
         </tr>
         <tr>
             <td>Broccoli</td>
-            <td class="price" >0.99</td>
-            <td>2</td>
-            <td class="price" >1.98</td>
+            <td class="productPrice" >0.99</td>
+            <td><input class="productQuantity" type="number" placeholder="0" min="0" max="999"></td>
+            <td class="productTotalCost" >0.00</td>
         </tr>
         <tr>
             <td>Koekjes</td>
-            <td class="price" >1.20</td>
-            <td>4</td>
-            <td class="price" >4.80</td>
-        </tr>
+            <td class="productPrice" >1.20</td>
+            <td><input class="productQuantity" type="number" placeholder="0" min="0" max="999"></td>
+            <td class="productTotalCost" >0.00</td>
+        </tr> 
         <tr>
             <td>Noten</td>
-            <td class="price" >2.99</td>
-            <td>0</td>
-            <td class="price" >0.00</td>
+            <td class="productPrice" >2.99</td>
+            <td><input class="productQuantity" type="number" placeholder="0" min="0" max="999"></td>
+            <td class="productTotalCost" >0.00</td>
         </tr>
         <tr>
             <td colspan="3">Totaal</td>
-            <td class="price" >7.78</td>
+            <td id="totalCost" >0.00</td>
         </tr>
     </table>
     
+    <script src="script.js"></script>
 </body>
 </html>
