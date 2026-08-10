@@ -8,7 +8,18 @@
     <title>JavaScript Yahtzee</title>
 </head>
 <body>
-    
+    <button id="diceRoll">Gooi!</button>
+    <table id="dice">
+        <tr>
+            <td class="diceResult" >1</td>
+            <td class="diceResult" >2</td>
+            <td class="diceResult" >3</td>
+            <td class="diceResult" >4</td>
+            <td class="diceResult" >5</td>
+        </tr>
+    </table>
+
+   <br>
 
     <table id="scores">
         <thead>
@@ -19,32 +30,32 @@
         <tr>
             <td>EENEN</td>
             <td></td>
-            <td></td>
+            <td class="numberScore"></td>
         </tr>
         <tr>
             <td>TWEEËN</td>
             <td></td>
-            <td></td>
+            <td class="numberScore"></td>
         </tr>
         <tr>
             <td>DRIEËN</td>
             <td></td>
-            <td></td>
+            <td class="numberScore"></td>
         </tr>
         <tr>
             <td>VIEREN</td>
             <td></td>
-            <td></td>
+            <td class="numberScore"></td>
         </tr>
         <tr>
             <td>VIJVEN</td>
             <td></td>
-            <td></td>
+            <td class="numberScore"></td>
         </tr>
         <tr>
             <td>ZESSEN</td>
             <td></td>
-            <td></td>
+            <td class="numberScore"></td>
         </tr>
         <tr>
             <td colspan="2">TOTAAL AANTAL PUNTEN</td>
@@ -68,37 +79,37 @@
         <tr>
             <td>THREE OF A KIND</td>
             <td></td>
-            <td></td>
+            <td class="specialScore"></td>
         </tr>
         <tr>
             <td>CARRE</td>
             <td></td>
-            <td></td>
+            <td class="specialScore"></td>
         </tr>
         <tr>
             <td>FULL HOUSE</td>
             <td></td>
-            <td></td>
+            <td class="specialScore"></td>
         </tr>
         <tr>
             <td>KLEINE STRAAT</td>
             <td></td>
-            <td></td>
+            <td class="specialScore"></td>
         </tr>
         <tr>
             <td>GROTE STRAAT</td>
             <td></td>
-            <td></td>
+            <td class="specialScore"></td>
         </tr>
         <tr>
             <td>YAHTZEE</td>
             <td></td>
-            <td></td>
+            <td class="specialScore"></td>
         </tr>
         <tr>
             <td>CHANGE</td>
             <td></td>
-            <td></td>
+            <td class="specialScore"></td>
         </tr>
         <tr>
             <th colspan="2">TOTAAL DEEL 2</th>
@@ -111,17 +122,7 @@
     </table>
 
     <br>
-    <table id="dice">
-        <tr>
-            <td class="diceResult" >1</td>
-            <td class="diceResult" >2</td>
-            <td class="diceResult" >3</td>
-            <td class="diceResult" >4</td>
-            <td class="diceResult" >5</td>
-        </tr>
-    </table>
-
-    <button id="diceRoll">Gooi!</button>
+    
 
     <script src="script.js"></script>
 </body>
