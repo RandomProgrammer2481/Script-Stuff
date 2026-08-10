@@ -1,5 +1,8 @@
 //References
 const button = document.getElementById("diceRoll");
+const displayTotalOne = [...document.querySelectorAll(".partOneTotal")];
+const displayTotalTwo = document.getElementById("partTwoTotal")
+const displayTotal = document.getElementById("total")
 
 //Event listeners
 if (button) {
@@ -17,6 +20,7 @@ function rollDice() {
     let diceDisplay = [...document.querySelectorAll(".diceResult")];
     let numberDisplay = [...document.querySelectorAll(".numberScore")];
     let specialDisplay = [...document.querySelectorAll(".specialScore")];
+    
 
 
     for (let i = 0; i < 5; i++) {
@@ -27,6 +31,15 @@ function rollDice() {
 
     let numberScores = calcNumberScores(results)
     let specialScores = calcSpecialScores(results)
+    let specialScoresTotal = 0
+    let numberScoresTotal = 0
+    
+    for (let i = 0; i < 7; i++) {
+        specialScoresTotal += specialScores[i]
+        numberScoresTotal += numberScores[i]
+    }
+    
+    let totalScore = numberScoresTotal + specialScoresTotal
 
     diceDisplay.forEach((el, index) => {
         el.textContent = results[index];
@@ -40,6 +53,14 @@ function rollDice() {
     specialDisplay.forEach((el, index) => {
         el.textContent = specialScores[index];
     });
+
+
+    displayTotalOne.forEach((el) => {
+        el.textContent = numberScoresTotal;
+    });
+    
+    displayTotalTwo.textContent = specialScoresTotal
+    displayTotal.textContent = totalScore
 }
 
 
@@ -55,7 +76,7 @@ function calcNumberScores(results) {
 }
 
 function calcSpecialScores(results) {
-    let scores = [0, 0, 0, 0, 0, 0, 0,];
+    let scores = [0, 0, 0, 0, 0, 0, 0];
     let resultsOrdered = [...results].sort((a, b) => a - b)
     let orderCount = 0
     let duplicateCount = {
