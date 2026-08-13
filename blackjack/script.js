@@ -1,48 +1,151 @@
 const deck = {
-  1: "heart1", 2: "heart2", 3: "heart3", 4: "heart4", 5: "heart5",
-  6: "heart6", 7: "heart7", 8: "heart8", 9: "heart9", 10: "heart10",
-  11: "heart11", 12: "heart12", 13: "heart13",
-  14: "diamond1", 15: "diamond2", 16: "diamond3", 17: "diamond4", 18: "diamond5",
-  19: "diamond6", 20: "diamond7", 21: "diamond8", 22: "diamond9", 23: "diamond10",
-  24: "diamond11", 25: "diamond12", 26: "diamond13",
-  27: "club1", 28: "club2", 29: "club3", 30: "club4", 31: "club5",
-  32: "club6", 33: "club7", 34: "club8", 35: "club9", 36: "club10",
-  37: "club11", 38: "club12", 39: "club13",
-  40: "spade1", 41: "spade2", 42: "spade3", 43: "spade4", 44: "spade5",
-  45: "spade6", 46: "spade7", 47: "spade8", 48: "spade9", 49: "spade10",
-  50: "spade11", 51: "spade12", 52: "spade13"
+    1: "hearts1", 2: "hearts2", 3: "hearts3", 4: "hearts4", 5: "hearts5",
+    6: "hearts6", 7: "hearts7", 8: "hearts8", 9: "hearts9", 10: "hearts10",
+    11: "hearts11", 12: "hearts12", 13: "hearts13",
+    14: "diamonds1", 15: "diamonds2", 16: "diamonds3", 17: "diamonds4", 18: "diamonds5",
+    19: "diamonds6", 20: "diamonds7", 21: "diamonds8", 22: "diamonds9", 23: "diamonds10",
+    24: "diamonds11", 25: "diamonds12", 26: "diamonds13",
+    27: "clubs1", 28: "clubs2", 29: "clubs3", 30: "clubs4", 31: "clubs5",
+    32: "clubs6", 33: "clubs7", 34: "clubs8", 35: "clubs9", 36: "clubs10",
+    37: "clubs11", 38: "clubs12", 39: "clubs13",
+    40: "spades1", 41: "spades2", 42: "spades3", 43: "spades4", 44: "spades5",
+    45: "spades6", 46: "spades7", 47: "spades8", 48: "spades9", 49: "spades10",
+    50: "spades11", 51: "spades12", 52: "spades13"
 };
 
 let drawnCards = []
 let dealerCards = []
 let playerCards = []
 let gameActive = false
+let dealerScore = 0
+let playerScore = 0
+let turnCounter = 0
 
+const dealerTotal = document.getElementById("dealerTotal")
+const playerTotal = document.getElementById("playerTotal")
+const hitButton = document.getElementById("hit")
+const stayButton = document.getElementById("stay")
 
-function drawCard() {
+hitButton.addEventListener("click", () => hit(false))
+stayButton.addEventListener("click", stay)
+
+function drawCard(isDealer) {
     let randomNumber = Math.floor(Math.random() * 52) + 1
-    
+
     while (drawnCards.includes(randomNumber)) {
         randomNumber = Math.floor(Math.random() * 52) + 1
     }
 
     drawnCards.push(randomNumber)
+    let card = deck[randomNumber]
 
-    return deck[randomNumber]
+    if (isDealer) {
+        dealerCards.push(card)
+        addCardToScreen(card, true)
+    } else {
+        playerCards.push(card)
+        addCardToScreen(card, false)
+    }
 }
 
-function hit() {
+function hit(isDealer) {
     if (!gameActive) {
-        deal()
-        return
+        deal();
+    } else {
+        drawCard(isDealer)
     }
 
-    playerCards.push(drawCard())
+    console.log(playerCards)
+    console.log(dealerCards)
+
+
+    playerScore = calcScore(playerCards)
+    dealerScore = calcScore(dealerCards)
+    dealerTotal.textContent = "Dealer Total: " + dealerScore
+    playerTotal.textContent = "Player Total: " + playerScore
+    console.log(playerScore)
+    console.log(dealerScore)
+
+    if (playerScore == 21) {
+        endGame("Win", "you got Blackjack")
+    }
+}
+
+function stay() {
+    if (playerScore == 16) {
+        while (dealerScore < 16) {
+            hit(true)
+        }
+    } else {
+        while (dealerScore < 17) {
+            hit(true)
+        }
+    }
+
+    if (dealerScore > 21) {
+        endGame("win", "The Dealer busted!")
+    } else if (dealerScore > playerScore && dealerScore == 21) {
+        endGame("lose", "The Dealer got Blackajack!")
+    } else if (dealerScore > playerScore) {
+        endGame("lose", "You didn't score high enough!")
+    } else if (dealerScore < playerScore) {
+        endGame("win", "Your score is higher!")
+    } else if (dealerScore == playerScore) {
+        endGame("draw", "You have the same score!")
+    }
 }
 
 function deal() {
-    for (let i = 0; i < 2; i ++) {
-        dealerCards.push(drawCard())
-        playerCards.push(drawCard())
+    drawCard(false)
+    drawCard(true)
+    drawCard(false)
+
+    hitButton.textContent = "Hit"
+
+    gameActive = true
+}
+
+function calcScore(cardArray) {
+    let score = 0
+    let aceCounter = 0
+
+    for (let i = 0; i < cardArray.length; i++) {
+        let str = cardArray[i]
+        let num = parseInt(str.replace(/[a-z]/gi, ""));
+
+        if (num == 1) {
+            score += 11
+            aceCounter ++
+        }
+        else if (num > 10 && num < 14) {
+            score += 10
+        }
+        else {
+            score += num
+        }
+
     }
+
+    if (playerScore > 21 && aceCounter > 0) {
+        while (aceCounter > 0 || playerScore > 21) {
+            playerScore -= 10
+            aceCounter -= 1
+        }
+    }
+    return score
+}
+
+function addCardToScreen(card, isDealer) {
+    const img = document.createElement("img")
+    img.src = "cards/" + card + ".png"
+    
+    if (isDealer) {
+        document.getElementById("dealerCards").appendChild(img)
+    } else {
+        document.getElementById("playerCards").appendChild(img)
+    }
+}
+
+function endGame(endstate, reason) {
+   
 }
