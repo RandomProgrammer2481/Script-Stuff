@@ -22,12 +22,19 @@ let playerScore = 0
 let turnCounter = 0
 
 const dealerTotal = document.getElementById("dealerTotal")
+const dealerCardsContainer = document.getElementById("dealerCards")
 const playerTotal = document.getElementById("playerTotal")
+const playerCardsContainer = document.getElementById("playerCards")
 const hitButton = document.getElementById("hit")
 const stayButton = document.getElementById("stay")
+const replayButton = document.getElementById("replay")
+const endGameText = document.getElementById("endGameText")
+
+const hiddenElements = document.getElementsByClassName("hidden")
 
 hitButton.addEventListener("click", () => hit(false))
 stayButton.addEventListener("click", stay)
+replayButton.addEventListener("click", replay)
 
 function drawCard(isDealer) {
     let randomNumber = Math.floor(Math.random() * 52) + 1
@@ -66,12 +73,20 @@ function hit(isDealer) {
     console.log(playerScore)
     console.log(dealerScore)
 
-    if (playerScore == 21) {
-        endGame("Win", "you got Blackjack")
+    if (playerScore == 21 && turnCounter == 0) {
+        endGame("win", "Congratulations! You Win! You got Blackjack")
+    } else if (playerScore > 21) {
+        endGame("lose", "Too bad! You Lose! You busted!")
+    }
+
+    if (!isDealer) {
+        turnCounter += 1 
     }
 }
 
 function stay() {
+    
+    
     if (playerScore == 16) {
         while (dealerScore < 16) {
             hit(true)
@@ -83,15 +98,15 @@ function stay() {
     }
 
     if (dealerScore > 21) {
-        endGame("win", "The Dealer busted!")
+        endGame("win", "Congratulations! You Win! The Dealer busted!")
     } else if (dealerScore > playerScore && dealerScore == 21) {
-        endGame("lose", "The Dealer got Blackajack!")
+        endGame("lose", "Too bad! You Lose! The Dealer got Blackjack!")
     } else if (dealerScore > playerScore) {
-        endGame("lose", "You didn't score high enough!")
+        endGame("lose", "Too bad! You lose! You didn't score high enough!")
     } else if (dealerScore < playerScore) {
-        endGame("win", "Your score is higher!")
+        endGame("win", "Congratulations! You Win! Your score is higher!")
     } else if (dealerScore == playerScore) {
-        endGame("draw", "You have the same score!")
+        endGame("draw", "It's a Draw! You have the same score!")
     }
 }
 
@@ -126,9 +141,9 @@ function calcScore(cardArray) {
 
     }
 
-    if (playerScore > 21 && aceCounter > 0) {
-        while (aceCounter > 0 || playerScore > 21) {
-            playerScore -= 10
+    if (score > 21 && aceCounter > 0) {
+        while (aceCounter > 0 && score > 21) {
+            score -= 10
             aceCounter -= 1
         }
     }
@@ -146,6 +161,52 @@ function addCardToScreen(card, isDealer) {
     }
 }
 
-function endGame(endstate, reason) {
+function endGame(endState, text) {
+    hitButton.style.display = "none"
+    stayButton.style.display = "none"
    
+    endGameText.textContent = text
+
+   if (endState == "win") {
+    endGameText.style.color = "green"
+   } else if (endState == "lose") {
+    endGameText.style.color = "red"
+   } else if (endState == "draw") {
+    endGameText.style.color = "orange"
+   }
+
+   for (let i = 0; i < hiddenElements.length; i++) {
+    hiddenElements[i].style.display = "inline"
+   }
+
+}
+
+function replay() {
+    drawnCards = []
+    dealerCards = []
+    playerCards = []
+    gameActive = false
+    dealerScore = 0
+    playerScore = 0
+    turnCounter = 0
+
+    while (dealerCardsContainer.firstChild) {
+        dealerCardsContainer.removeChild(dealerCardsContainer.firstChild)
+    }
+
+    while (playerCardsContainer.firstChild) {
+        playerCardsContainer.removeChild(playerCardsContainer.firstChild)
+    }
+
+    for (let i = 0; i < hiddenElements.length; i++) {
+    hiddenElements[i].style.display = "none"
+   }
+
+    hitButton.style.display = "inline"
+    stayButton.style.display = "inline"
+
+
+
+    hit(false)
+
 }

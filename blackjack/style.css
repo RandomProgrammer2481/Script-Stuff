@@ -11,3 +11,7 @@ th, td {
     padding: 16px;
 
 }
+
+.hidden {
+    display: none;
+}
