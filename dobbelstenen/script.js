@@ -1,4 +1,4 @@
-const button = document.getElementById("diceroll");
+
 
 
 function rollDice() {
