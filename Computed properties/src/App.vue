@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, reactive, computed} from "vue"
+import {ref, computed} from "vue"
 
 let people = ref([
   {name: "Gordon Freeman", age: 47},

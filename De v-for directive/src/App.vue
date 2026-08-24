@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, computed } from "vue";
+import { ref } from "vue";
 
 const tasks = ref([
   { name: "Boodschappen doen", completed: false },
