@@ -30,7 +30,7 @@ let numberOfAdults = computed(() => {
 })
 
 const addPerson = () => {
-  let newPerson = {name: String(newName), age: Number(newAge)}
+  let newPerson = {name: newName.value, age: newAge.value}
   
   people.value.push(newPerson)
 }
