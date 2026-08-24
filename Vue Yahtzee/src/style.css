@@ -30,6 +30,7 @@
   }
 }
 
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -293,4 +294,23 @@ code {
     right: 0;
     border-right-color: var(--border);
   }
+}
+
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #888;
+    padding: 4px;
+}
+
+td {
+  text-align: left;
+}
+
+
+div {
+  align-self: center;
 }
