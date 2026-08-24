@@ -40,6 +40,11 @@ let fives = computed(() => {
 let sixes = computed(() => {
     return diceCount.value[6] * 6;
 });
+
+let sumPartOne = computed(() => {
+    let sum = ones.value + twos.value + threes.value + fours.value + fives.value + sixes.value;
+    return sum;
+});
 </script>
 
 <template>
@@ -86,7 +91,7 @@ let sixes = computed(() => {
             </tr>
             <tr>
                 <td colspan="2">TOTAAL AANTAL PUNTEN</td>
-                <td></td>
+                <td>{{ sumPartOne }}</td>
             </tr>
             <tr>
                 <td>
@@ -95,11 +100,11 @@ let sixes = computed(() => {
                     Als puntentotaal => 63
                 </td>
                 <td>35 punten</td>
-                <td></td>
+                <td>0</td>
             </tr>
             <tr>
                 <th colspan="2">TOTAAL DEEL 1</th>
-                <td></td>
+                <td>{{ sumPartOne }}</td>
             </tr>
             <tr><td colspan="3"></td></tr>
             <thead>
