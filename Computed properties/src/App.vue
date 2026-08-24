@@ -6,16 +6,18 @@ let people = ref([
   {name: "Nathan Drake", age: 54},
   {name: "David Snake", age: 47},
   {name: "Lara Croft", age: 40},
-  {name: "Leon S. Kennedy", age: 51}
+  {name: "Leon S. Kennedy", age: 51},
+  {name: "Misfortune R. Hernandez", age: 8},
+  {name: "Fran Bow", age: 10}
 ])
 
 let newName = ref()
 let newAge = ref()
 let children = computed(() => {
-  return [...people.value.filter(p => p.age < 50)]
+  return [...people.value.filter(p => p.age < 18)]
 })
 let adults = computed(() => {
-  return [...people.value.filter(p => p.age > 50)]
+  return [...people.value.filter(p => p.age > 18)]
 })
 let totalPeople = computed(() => {
   return people.value.length
