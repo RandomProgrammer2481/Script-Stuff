@@ -1,5 +1,5 @@
 
-
+let button = document.getElementById("diceroll")
 
 function rollDice() {
     let results = [];
