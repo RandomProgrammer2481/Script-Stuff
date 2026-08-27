@@ -13,7 +13,6 @@ const handleDice = (newDice: Array<number>) => {
 <template>
     <ThrownDice @update-dice="handleDice"></ThrownDice>
     <ScoreTable :dice="dice"></ScoreTable>
-
     <h4>
         Dice Textures by
         <a href="https://kicked-in-teeth.itch.io/dice-roll">Kicked in the teeth</a>

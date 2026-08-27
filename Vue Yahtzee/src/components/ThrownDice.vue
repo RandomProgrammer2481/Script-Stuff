@@ -24,11 +24,13 @@ const rollDice = () => {
     <div>
         <button @click="rollDice">Gooi!</button>
         <table>
-            <tr>
-                <td v-for="(die, index) in dice" :key="index">
-                    <img :src="`/dice/${die}.png`" />
-                </td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td v-for="(die, index) in dice" :key="index">
+                        <img :src="`/dice/${die}.png`" />
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </template>
