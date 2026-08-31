@@ -4,6 +4,6 @@ import Edit from './pages/Edit.vue';
 
 export const routes = [
     {path: '/', component: OverView},
-    {path: '/edit', component: Edit},
+    {path: '/edit/:ID', component: Edit},
     {path: '/create', component: Create},
 ];
