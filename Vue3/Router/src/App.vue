@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref, reactive, computed} from 'vue';
 import GroceriesTable from './components/GroceriesTable.vue';
+import {RouterLink} from 'vue-router';
 
 let groceries = ref([
     {product: 'apples', price: 0.48, amount: 3},
@@ -12,5 +13,8 @@ let groceries = ref([
 </script>
 
 <template>
-    <GroceriesTable v-model="groceries"></GroceriesTable>
+    <RouterLink to="/">Go to Overview</RouterLink>
+    <RouterLink to="/create">Create Something</RouterLink>
+
+    <routerView></routerView>
 </template>
