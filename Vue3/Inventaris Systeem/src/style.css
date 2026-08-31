@@ -294,3 +294,33 @@ code {
     border-right-color: var(--border);
   }
 }
+
+body {
+    font-family: sans-serif;
+    align-self: center
+}
+
+div {
+  align-self: center
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    text-align: center;
+    background-color: lightyellow;
+}
+
+td, th { 
+    border:1px solid #888;
+    padding: 10px;
+}
+
+nav {
+  background-color: lightblue;
+  min-height: 60px;
+  align-items: center;
+  align-content: center;
+}
