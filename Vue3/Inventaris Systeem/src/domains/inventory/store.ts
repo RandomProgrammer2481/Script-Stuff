@@ -1,14 +1,14 @@
 import {ref, reactive, computed} from 'vue';
 
-export interface item {
-    id: 0;
-    name: '';
-    actualAmount: 0;
-    minimumAmount: 0;
+export interface Item {
+    id: number;
+    name: string;
+    actualAmount: number;
+    minimumAmount: number;
 }
 
 //State
-const inventory = ref([
+const inventory = ref<Item[]>([
     {id: 23245, name: 'Electric Lawnmower', actualAmount: 12, minimumAmount: 4},
     {id: 40738, name: 'Hedgetrimmer', actualAmount: 5, minimumAmount: 6},
     {id: 34661, name: 'Shovel', actualAmount: 13, minimumAmount: 10},
@@ -20,12 +20,12 @@ const inventory = ref([
 
 // Getters
 export const getAllItems = computed(() => inventory.value);
-export const getItemById = (id: number) => computed(() => inventory.value.find(item => item.id == id));
+export const getItemById = (id: number) => computed(() => inventory.value.find(Item => Item.id == id));
 
 // Actions
-export const addItem = (Item: item) => inventory.value.push(Item);
+export const addItem = (Item: Item) => inventory.value.push(Item);
 
-export const updateItem = (newItem: item) => {
+export const updateItem = (newItem: Item) => {
     inventory.value[findItemIndex(newItem.id)] = newItem;
 };
 

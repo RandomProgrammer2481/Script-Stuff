@@ -324,3 +324,7 @@ nav {
   align-items: center;
   align-content: center;
 }
+
+button {
+  padding: 8px;
+}

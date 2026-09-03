@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import {ref, reactive, computed} from 'vue';
-import type {item} from '../store';
+import {ref, reactive, computed, watch} from 'vue';
+import type {Item} from '../store';
 
-const props: any = defineProps({
-    item: {},
-});
+const props = defineProps<{
+    item: Item;
+}>();
 const emit = defineEmits(['submit']);
 
-const submit = (item: item) => {
+const submit = (item: Item) => {
     emit('submit', item);
 };
 
-const currentItem = ref({...props.item});
+const currentItem = ref<Item>({...props.item});
+watch(
+    () => props.item,
+    newItem => {
+        currentItem.value = {...newItem};
+    },
+);
 </script>
-
-/// Fix de v-model hieronder. Het geeft niet goed weer in edit
 
 <template>
     <div>
