@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, reactive, computed, watch} from 'vue';
+import {ref, watch} from 'vue';
 import type {Item} from '../store';
 
 const props = defineProps<{
@@ -11,7 +11,8 @@ const submit = (item: Item) => {
     emit('submit', item);
 };
 
-const currentItem = ref<Item>({...props.item});
+const currentItem = ref({...props.item});
+
 watch(
     () => props.item,
     newItem => {

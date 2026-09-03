@@ -1,4 +1,4 @@
-import {ref, reactive, computed} from 'vue';
+import {ref, computed} from 'vue';
 
 export interface Item {
     id: number;

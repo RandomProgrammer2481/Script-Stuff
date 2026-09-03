@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import {ref, reactive, computed} from 'vue';
-import ItemTable from '../components/ItemTable.vue';
 import {getAllItems} from '../store';
+import ItemTable from '../components/ItemTable.vue';
 
-const inventory = ref(getAllItems);
+const inventory = getAllItems;
 </script>
 
 <template>
-    <ItemTable :inventory="inventory"></ItemTable>
+    <ItemTable v-if="inventory" :inventory="inventory"></ItemTable>
 </template>

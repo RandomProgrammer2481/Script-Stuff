@@ -4,8 +4,8 @@ import Create from './pages/Create.vue';
 import Order from './pages/Order.vue';
 
 export const routes = [
-    {path: '/', component: Overview},
-    {path: '/Edit/:ID', component: Edit},
-    {path: '/Create', component: Create},
-    {path: '/Order', component: Order},
+    {path: '/', component: Overview, name: 'inventory.overview'},
+    {path: '/Edit/:ID', component: Edit, name: 'inventory.edit'},
+    {path: '/Create', component: Create, name: 'inventory.create'},
+    {path: '/Order', component: Order, name: 'inventory.order'},
 ];

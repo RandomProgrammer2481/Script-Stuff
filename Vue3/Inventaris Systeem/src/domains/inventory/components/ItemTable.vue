@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import {ref, reactive, computed} from 'vue';
-import {deleteItem} from '../store';
+import {deleteItem, type Item} from '../store';
 import {router} from '../../../router';
 
-const props: any = defineProps({
-    inventory: {},
-});
+const {inventory} = defineProps<{
+    inventory: Item[];
+}>();
 
 const editItem = (id: number) => {
     router.push('edit/' + id);
