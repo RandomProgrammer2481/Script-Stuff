@@ -2,13 +2,19 @@
 <?php require "partials/nav.php"?>
 <html>
     <body>
-        <form>
-            <input name="name" id="name" placeholder="Enter product name...">   Name
+        <form  method="POST">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter product name..." pattern="^[A-Za-z\s]*$"> 
+            </br>
+            <label for="price">Price</label>
+            <input type="number" name="price" id="price" placeholder="0">
+            </br>
+            <label for="quantity">Quantity</label>
+            <input type="number" name="quantity" id="quantity" placeholder="0"> 
             <br>
-            <input type="number" name="unit price" id="unit price" placeholder="0"> Price
-            <br>
-            <input type="number" name="quantity" id="quantity" placeholder="0"> Quantity
-            <br>
+            <p>
+                <button type="submit">Create</button>
+            </p>
         </form>
     </body>
 </html>

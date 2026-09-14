@@ -2,9 +2,7 @@
 <?php require "partials/nav.php"?>
 <html>
 <body>
-    <div class="h-full border-2 border-gray-200 
-                border-opacity-60 rounded-lg 
-                overflow-hidden">
+    <div>
         <table id="groceryList">
             <thead>
                 <th>Product</th>
@@ -14,10 +12,10 @@
             </thead>
             <?php foreach ($groceries as $grocery => $details) : ?>
                 <tr>
-                    <td><?=$grocery?></td>
-                    <td><?=$details["unit price"]?></td>
+                    <td><?=$details["name"]?></td>
+                    <td class="price"><?=$details["price"]?></td>
                     <td><input type="number" name="amount" placeholder="<?=$details["quantity"]?>"></td>
-                    <td><?=$details["unit price"] * $details["quantity"]?></td>
+                    <td><?=$details["price"] * $details["quantity"]?></td>
                 </tr>
             <?php endforeach ?>
             <tr>
