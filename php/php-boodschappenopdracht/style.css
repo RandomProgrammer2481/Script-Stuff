@@ -67,3 +67,7 @@ a {
   align-items: center;
   min-height: fit-content;
 }
+
+.error {
+    color: red;
+}
