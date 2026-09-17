@@ -9,19 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $errors = [];
 
     if (! Validator::string($_POST["name"], 1, 256)) {
-        $errors["name"] = "A name of no more than 256 characters is required";
+        $errors["name"] = "*A name of no more than 256 characters is required";
     }
 
     if (! Validator::decimal($_POST["price"], 0, 2)) {
-        $errors["price"] = "Price should not have more than 2 decimals";
+        $errors["price"] = "*Price should not have more than 2 decimals";
     }
 
     if (! Validator::integer($_POST["price"], 0, INF)) {
-        $errors["price"] = "Price should be greater than zero";
+        $errors["price"] = "*Price should be greater than zero";
     }
 
     if (! Validator::integer($_POST["quantity"], 1, INF)) {
-        $errors["quantity"] = "Quantity should be greater than zero";
+        $errors["quantity"] = "*Quantity should be greater than zero";
     }
 
 

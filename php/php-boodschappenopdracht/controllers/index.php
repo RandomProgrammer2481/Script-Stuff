@@ -15,4 +15,3 @@ $totalPrice = array_reduce(
 
 require "views/index.view.php";
 
-?>
