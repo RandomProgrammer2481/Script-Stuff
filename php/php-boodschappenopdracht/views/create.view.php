@@ -15,7 +15,7 @@
             <label for="quantity">Quantity</label>
             <input type="number" name="quantity" id="quantity" placeholder="0" required value="<?= $_POST["quantity"] ?? '' ?>">
             <p class="error"><?=$errors["quantity"] ?? ''?></p>
-            </br>
+            
             <p>
                 <button type="submit">Create</button>
             </p>
