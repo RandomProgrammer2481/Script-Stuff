@@ -5,6 +5,7 @@
         <tr>
             <th>Naam</th>
             <th>Beschrijving</th>
+            <th>Categorie</th>
             <th colspan="2" >Acties</th>
         </tr>
     </thead>
@@ -13,6 +14,7 @@
             <tr>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->description }}</td>
+                <td>{{ $item->category->name }}</td>
                 <td>
                     <form action="{{ route('items.destroy', $item->id) }}" method="POST">
                         @csrf

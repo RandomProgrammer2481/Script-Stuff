@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreItemRequest;
+use App\Http\Requests\UpdateItemRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Item;
 
@@ -10,9 +13,8 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $items = Item::all();
+    public function index() {
+        $items = Item::with('category')->get();
         return view('items.index', compact('items'));
     }
 
@@ -21,27 +23,22 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('items.create');
+        $categories = Category::all();
+        return view('items.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
+    // De Request class wordt vervangen door de StoreItemRequest
+    public function store(StoreItemRequest $request) {
         // Haalt de gevalideerde gegevens op uit de StoreItemRequest class
         $validated = $request->validated();
 
-        $item = new Item();
-
-        // Stelt de 'name' en 'description' waarden in op het gevalideerde gegevens
-        $item->name = $validated['name'];
-        $item->description = $validated['description'];
-
-        $item->save();
+        Item::create($validated);
 
         return redirect()->route('items.index');
     }
-
     /**
      * Display the specified resource.
      */
@@ -53,27 +50,22 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Item $item)
     {
-        $item = Item::find($id);
-        return view('items.edit', compact('item'));
+        $categories = Category::all();
+        return view('items.edit', compact('item', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Item $item)
-    {
-        // Haalt de gevalideerde gegevens op uit de UpdateItemRequest class
-        $validated = $request->validated();
+    public function update(UpdateItemRequest $request, Item $item) {
+    // Haalt de gevalideerde gegevens op uit de UpdateItemRequest class
+    $validated = $request->validated();
 
-        // Stelt de 'name' en 'description' waarden in op het gevalideerde gegevens
-        $item->name = $validated['name'];
-        $item->description = $validated['description'];
+    $item->update($validated);
 
-        $item->save();
-
-        return redirect()->route('items.index');
+    return redirect()->route('items.index');
     }
 
     /**
