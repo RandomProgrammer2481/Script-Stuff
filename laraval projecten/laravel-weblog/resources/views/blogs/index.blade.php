@@ -1,17 +1,9 @@
-<h1> Blogs </h1>
+@extends('layouts.app')
 
-<table>
-    <thead>
-        <tr>
-            <th>Blogs</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($blogs as $blog)
-            <tr>
-                <td>{{ $blog->title }}</td>
-                <td>{{ $blog->created_at }}</td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+@section('title', 'Page Title')
+
+@section('content')
+<h2> Blogs by Newest</h2>
+
+@include('partials.blog_list')
+@endsection
