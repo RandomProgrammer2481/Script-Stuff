@@ -7,21 +7,20 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $blogs = Blog::all();
+        $make_blurb = fn ($text) => $this->makeBlurb($text);
 
         $sorted_blogs = Blog::latest()->get();
-
-        return view('blogs.index', compact('sorted_blogs'));
-
-        
+        return view('blogs.index', compact('sorted_blogs', 'make_blurb'));
     }
 
     /**
@@ -43,8 +42,7 @@ class BlogController extends Controller
         $blog->category_id = $request->input('category');
         $blog->body = $request->input('body');
         $blog->is_premium = ($request->input('premium') === "premium") ? true : false ;
-        // Replace with proper user_id later
-        $blog->user_id = 5;
+        $blog->user_id = Auth::user()->id;
         $blog->save();
 
         return redirect()->route('blogs.index');
@@ -68,17 +66,31 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Blog $blog)
     {
-        //
+        $categories = Category::all();
+
+        if (Auth::user() && Auth::user()->id === $blog->user_id) {
+            return view('blogs.edit', compact('blog', 'categories'));
+        } else {
+            return view('errors.403');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $blog_id)
     {
-        //
+        $blog = Blog::find($blog_id);
+        $blog->title = $request->input('title');
+        $blog->category_id = $request->input('category');
+        $blog->body = $request->input('body');
+        $blog->is_premium = ($request->input('premium') === "premium") ? true : false ;
+        $blog->user_id = Auth::user()->id;
+        $blog->save();
+
+        return redirect()->route('blogs.show', $blog);
     }
 
     /**
@@ -87,6 +99,6 @@ class BlogController extends Controller
     public function destroy(Blog $blog)
     {
         $blog->delete();
-        return redirect()->route('items.index');
+        return redirect()->route('users.user', Auth::user());
     }
 }

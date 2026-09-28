@@ -20,8 +20,8 @@ class BlogFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word(1),
-            'body' => $this->faker->paragraph(5),
+            'title' => $this->faker->word(),
+            'body' => $this->faker->text(2500),
             'is_premium' => $this->faker->boolean(25),
             'category_id' => Category::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,

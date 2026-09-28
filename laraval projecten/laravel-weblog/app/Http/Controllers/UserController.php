@@ -39,7 +39,8 @@ class UserController extends Controller
     public function show(User $account)
     {
         $sorted_blogs = Blog::where('user_id', $account->id)->get();
-        return view('users.user', compact('sorted_blogs', 'account'));
+        $make_blurb = fn ($text) => $this->makeBlurb($text);
+        return view('users.user', compact('sorted_blogs', 'account', 'make_blurb'));
     }
 
     /**
