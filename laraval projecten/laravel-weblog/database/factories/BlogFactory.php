@@ -25,6 +25,7 @@ class BlogFactory extends Factory
             'is_premium' => $this->faker->boolean(25),
             'category_id' => Category::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,
+            'img_path' => $this->faker->image()
         ];
     }
 }

@@ -15,12 +15,18 @@ class BlogController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
         $make_blurb = fn ($text) => $this->makeBlurb($text);
 
-        $sorted_blogs = Blog::latest()->get();
-        return view('blogs.index', compact('sorted_blogs', 'make_blurb'));
+        $categories = Category::all();
+
+        if ($request->category != ""){
+            $ordered_blogs = Blog::where('category_id', $request->category)->latest()->get();
+        } else {
+            $ordered_blogs = Blog::latest()->get();
+        }
+        return view('blogs.index', compact('ordered_blogs', 'make_blurb', 'categories'));
     }
 
     /**
@@ -43,6 +49,15 @@ class BlogController extends Controller
         $blog->body = $request->input('body');
         $blog->is_premium = ($request->input('premium') === "premium") ? true : false ;
         $blog->user_id = Auth::user()->id;
+
+        $request->validate(['img' => ['required', 'image']]);
+ 
+        $path = $request->image('img')
+            ->cover(400, 400)
+            ->toWebp()
+            ->storePublicly('images', 'public');
+        
+        $blog->img_path = $path;
         $blog->save();
 
         return redirect()->route('blogs.index');
@@ -88,6 +103,15 @@ class BlogController extends Controller
         $blog->body = $request->input('body');
         $blog->is_premium = ($request->input('premium') === "premium") ? true : false ;
         $blog->user_id = Auth::user()->id;
+        $request->validate(['img' => ['required', 'image']]);
+ 
+        $path = $request->image('img')
+            ->cover(400, 400)
+            ->toWebp()
+            ->storePublicly('images', 'public');
+        
+        $blog->img_path = $path;
+
         $blog->save();
 
         return redirect()->route('blogs.show', $blog);

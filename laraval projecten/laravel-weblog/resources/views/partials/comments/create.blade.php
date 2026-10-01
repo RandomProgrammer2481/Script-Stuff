@@ -1,5 +1,5 @@
 @if(Auth::user())
-<form action="{{route('comments.store', $blog)}}" method="PUT">
+<form action="{{route('comments.store', $blog)}}" method="POST">
     @csrf    
     @method('PUT')
     <div class="w-full px-3 my-2">

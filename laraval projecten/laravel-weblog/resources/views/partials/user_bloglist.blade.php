@@ -1,4 +1,4 @@
-<ul class="flex flex-col pl-1 bg-white rounded-lg shadow divide-y divide-gray-200">
+<ul class="flex flex-col pl-1 bg-white border rounded-lg shadow-lg divide-y divide-gray-200">
     @foreach($sorted_blogs as $blog)
         @if(Auth::check() && Auth::user()->id == $blog->user_id)
             <li class="px-6 py-4">

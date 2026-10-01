@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('is_premium');
             $table->foreignId('category_id');
             $table->foreignId('user_id');
+            $table->string('img_path');
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@
     <div class="flex-grow container mx-auto p-6">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Edit your post!</h1>
         
-        <form action="{{ route('blogs.update', $blog->id) }}" method="POST" class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <form action="{{ route('blogs.update', $blog->id) }}" method="POST" enctype="multipart/form-data" class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
             @csrf
             @method('PUT')
             <div class="mb-4">
@@ -29,6 +29,12 @@
             <div class="mb-4">
                 <label for="premium" class="block text-gray-700 font-semibold mb-2">Is this a premium article?</label>
                 <input type="checkbox" name="premium" id="premium" value="premium">
+            </div>
+
+            <div class="mb-4">
+                <label for="img" class="block text-gray-700 font-semibold mb-2">Add an image here:</label>
+                <input type="file" name="img" id="img" 
+                class="w-full px-4 py-2 block text-gray-700 font-semibold mb-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div class="mb-4">

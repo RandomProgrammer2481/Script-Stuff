@@ -54,9 +54,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
     }
 
     /**
@@ -65,5 +64,18 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function premium()
+    {
+        return view('users.premium');
+    }
+
+    public function set_premium()
+    {
+        $user = User::find(Auth::user()->id);
+        $user->update(['is_premium' => true]);
+
+        return redirect()->route('blogs.index');
     }
 }

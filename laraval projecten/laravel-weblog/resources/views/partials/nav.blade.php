@@ -4,9 +4,12 @@
 
             <span class="flex items-center">
                 <a class="text-gray-800 text-md font-semibold hover:text-purple-600 mr-4" href="{{route('blogs.index')}}">Blogs</a>
-                <a class="text-gray-800 text-md font-semibold hover:text-purple-600 mr-4" href="">Categories</a>
+                <a class="text-gray-800 text-md font-semibold hover:text-purple-600 mr-4" href="{{route('categories.index')}}">Categories</a>
                 @if(Auth::user())
                     <a class="text-gray-800 text-md font-semibold hover:text-purple-600 mr-4" href="{{route('blogs.create')}}">New Blog</a>
+                    @if(Auth::user()->is_premium != true)
+                    <a class="text-gray-800 text-md font-semibold hover:text-purple-600 mr-4" href="{{route('premium.show')}}">Premium</a>
+                    @endif
                 @endif
             </span>
             <span class="flex items-center">
