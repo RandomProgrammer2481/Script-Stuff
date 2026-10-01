@@ -8,6 +8,7 @@
         
         <form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="mb-4">
                 <label for="title" class="block text-gray-700 font-semibold mb-2">Title</label>
                 <input type="text" id="title" name="title" required

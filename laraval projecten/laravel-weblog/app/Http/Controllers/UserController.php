@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function set_premium()
     {
-        $user = User::find(Auth::user()->id);
+        $user = Auth::user();
         $user->update(['is_premium' => true]);
 
         return redirect()->route('blogs.index');
