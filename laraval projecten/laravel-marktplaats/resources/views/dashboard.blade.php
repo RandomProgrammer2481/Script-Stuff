@@ -1,0 +1,1 @@
+<a href="{{route('user.advertisements.index', Auth::user())}}">My Advertisements</a>

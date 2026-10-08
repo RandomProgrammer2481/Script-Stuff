@@ -24,21 +24,29 @@ class SessionController extends Controller
         if (Auth::check()){
                 return redirect('dashboard');
         } else {
-            return view('sessions.login');
+            $urlPrevious = url()->previous();
+            $urlBase = url()->to('/');
+            
+            // Set the previous url that we came from to redirect to after successful login but only if is internal
+            if(($urlPrevious != $urlBase . '/login') && (substr($urlPrevious, 0, strlen($urlBase)) === $urlBase)) {
+                session()->put('url.intended', $urlPrevious);
+            }
+
+            return view('auth.login');
         }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSessionRequest $request)
+    public function store(StoreSessionRequest $request,)
     {
         $credentials = $request->validated();
         $remember = $request->remember;
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
- 
+            
             return redirect()->intended('dashboard');
         }
  
@@ -77,6 +85,6 @@ class SessionController extends Controller
     public function destroy()
     {
         Auth::logout();
-        return redirect('dashboard');
+        return redirect()->route('dashboard');
     }
 }

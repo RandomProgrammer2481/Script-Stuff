@@ -17,7 +17,8 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 8, 2);
             $table->foreignId('category_id');
-            $table->boolean('is_promoted');
+            $table->foreignId('user_id');
+            $table->boolean('is_promoted')->default(0);
             $table->timestamp('promoted_at')->nullable(true)->default(null);
             $table->timestamps();
         });

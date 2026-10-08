@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Advertisement extends Model
 {
     use HasFactory;
-    
+
+    protected $fillable = ['title', 'price', 'category_id', 'is_promoted','description'];
+
     public function bids() {
         return $this->hasMany(Bid::class);
     }

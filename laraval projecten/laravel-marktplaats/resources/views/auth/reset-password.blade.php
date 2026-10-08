@@ -1,18 +1,15 @@
-<form action="{{route('sessions.store')}}" method="POST">
+<form action="{{route('password.update')}}" method="POST">
     <label for="email">Enter Email:</label>
     <input type="email" name="email" id="email" placeholder="email@example.net" value="{{old('email')}}">
     <br>
     <label for="password">Enter Password:</label>
     <input type="password" name="password" id="password" placeholder="********">
     <br>
-    <a href="{{route('sessions.forgot')}}">Forgot your password?<a>
+    <label for="password_confirmation">Confirm Password:</label>
+    <input type="password" name="password_confirmation" id="password_confirmation" placeholder="********">
     <br>
-    <label for="remember">Remember me:</label> 
-    <input type="checkbox" name="remember" id="remember" value="true">
-    <br>
-    <button type="submit">Login</button>
+    <input type="hidden" name="token" id="token" value="{{$token}}">
+    <button type="submit">Register</button>
 </form>
-
-
 
 @include('partials/errors')

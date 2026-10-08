@@ -1,4 +1,4 @@
-<form action="{{route('sessions.store')}}" method="POST">
+<form action="{{route('password.email')}}" method="POST">
     <label for="email">Enter Email:</label>
     <input type="email" name="email" id="email" placeholder="email@example.net" value="{{old('email')}}">
     <br>

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Advertisement;
 use App\Models\Category;
+use App\Models\User;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,6 +25,7 @@ class AdvertisementFactory extends Factory
             'description' => $this->faker->paragraph(),
             'price' => $this->faker->randomFloat(2, 0.01, 10000),
             'category_id' => Category::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
             'is_promoted' => false,
             'promoted_at' => null,
         ];
