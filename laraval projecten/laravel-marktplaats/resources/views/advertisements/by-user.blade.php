@@ -1,25 +1,12 @@
-<div>
-    @foreach($advertisements as $advertisement)
+@extends('layouts.app')
+
+@section('title', 'Page Title')
+
+@section('content')
+<div class="bg-gray-200 w-full">    
+    <div class="max-w-4xl mx-auto space-y-4 bg-gray-100 border border-rounded border-gray-300">
+    @include('partials.advertisement_list')
+    <p>{{$advertisements->onEachSide(3)->links()}}</p>
     <div>
-        <span>
-            <div>
-                <h3>{{$advertisement->title}}</h3>
-                <h6>{{$advertisement->category->name}}</h6>
-            <div>
-            <h6>€{{$advertisement->price}}</h6>
-        </span>
-        <h6>{{$advertisement->description}}</h6>
-        @if(Auth::check() && $user == Auth::user())
-        <form method="get" action="{{ route('advertisements.edit', $advertisement) }}" style="display:inline">
-            @csrf
-            <button type="submit">Edit</button>
-        </form>
-        <form method="POST" action="{{ route('advertisements.delete', $advertisement) }}" style="display:inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" onclick="return confirm('Delete this advertisement?')">Delete</button>
-        </form>
-        @endif
-    </div>
-    @endforeach
 </div>
+@endsection

@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Page Title')
+
+@section('content')
 <form action="{{route('advertisements.update', $advertisement)}}" method="POST">
     @csrf
     @method('PUT')
@@ -22,3 +27,4 @@
 </form>
 
 @include('partials/errors')
+@endsection

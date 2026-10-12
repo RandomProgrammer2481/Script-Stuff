@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Page Title')
+
+@section('content')
 <form action="{{route('advertisements.store')}}" method="POST">
     @csrf
     <label for="title">Title:</label>
@@ -21,3 +26,4 @@
 </form>
 
 @include('partials/errors')
+@endsection

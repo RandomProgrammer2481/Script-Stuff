@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Page Title')
+
+@section('content')
 <form action="{{route('password.update')}}" method="POST">
     <label for="email">Enter Email:</label>
     <input type="email" name="email" id="email" placeholder="email@example.net" value="{{old('email')}}">
@@ -13,3 +18,4 @@
 </form>
 
 @include('partials/errors')
+@endsection

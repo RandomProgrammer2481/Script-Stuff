@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text('body');
             $table->foreignId('advertisement_id')->nullable(true);
-            $table->foreignId('sender_id');
-            $table->foreignId('receiver_id');
+            $table->foreignId('user_id');
+            $table->foreignId('chat_id');
             $table->timestamps();
         });
     }

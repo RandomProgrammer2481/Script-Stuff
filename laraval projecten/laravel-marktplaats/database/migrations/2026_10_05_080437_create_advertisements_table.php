@@ -21,6 +21,8 @@ return new class extends Migration
             $table->boolean('is_promoted')->default(0);
             $table->timestamp('promoted_at')->nullable(true)->default(null);
             $table->timestamps();
+
+            $table->fullText(['title', 'description']);
         });
     }
 

@@ -17,19 +17,25 @@ class AdvertisementController extends Controller
     public function index(Request $request)
     {
         $advertisements = Advertisement::query()
-        ->when($request->category, fn ($q, $category) => $q->where('category_id', $category))
+        ->when($request->search, fn ($query, $search) => $query->whereFullText(['title', 'description'], $search))
+        ->when($request->category, fn ($query, $category) => $query->where('category_id', $category))
         ->latest()
-        ->paginate(15)
+        ->orderBy('is_promoted', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->orderBy('promoted_at', 'desc')
+        ->paginate(8)
         ->withQueryString();
 
-        return view('advertisements.index', compact('advertisements'));
+        $categories = Category::all();
+
+        return view('advertisements.index', compact('advertisements', 'categories'));
     }
 
     public function byUser(User $user)
     {
         $advertisements = Advertisement::where('user_id', $user->id)
         ->latest()
-        ->paginate(15);
+        ->paginate(8);
 
         return view('advertisements.by-user', compact('advertisements', 'user'));
     }
@@ -61,13 +67,14 @@ class AdvertisementController extends Controller
      */
     public function show(Advertisement $advertisement)
     {
-        if (Auth::check()){
-
-
-            return view('advertisements.show', compact('advertisement'));
-        } else {
+        if (!Auth::check()){
             return redirect()->route('login');
         }
+
+        $ordered_bids = $advertisement->bids()->orderBy('amount', 'desc')->get();
+        $highest_bid = $ordered_bids->first();
+
+        return view('advertisements.show', compact('advertisement', 'ordered_bids', 'highest_bid'));
     }
 
     /**

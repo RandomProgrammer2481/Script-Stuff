@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBidRequest;
+use App\Models\Bid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BidController extends Controller
 {
@@ -25,9 +28,17 @@ class BidController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBidRequest $request, int $advertisement_id)
     {
-        //
+        $arguments = [
+            'amount' => $request->validated('amount'),
+            'user_id' => Auth::user()->id,
+            'advertisement_id' => $advertisement_id
+        ];
+
+        Bid::create($arguments);
+
+        return redirect()->back();
     }
 
     /**

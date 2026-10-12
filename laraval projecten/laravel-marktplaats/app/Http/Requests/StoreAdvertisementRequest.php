@@ -23,10 +23,10 @@ class StoreAdvertisementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:4|max:256',
-            'price' => 'required|decimal:2|Between:0,10000',
-            'description' => 'required',
-            'category_id' => 'required',
+            'title' => ['required', 'min:4', 'max:256'],
+            'price' => ['required', 'decimal:2', 'Between:0', '10000'],
+            'description' => ['required'],
+            'category_id' => ['required'],
             
         ];
     }

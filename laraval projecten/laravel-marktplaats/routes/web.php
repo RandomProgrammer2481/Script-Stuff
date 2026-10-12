@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\BidController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
@@ -11,7 +14,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // To do:
-// Make the show page for a singular advertisement
+// Make an seeder and factory for chats and messages
+// make an view to show all the chat you're in
+// Make an view to show one specific chat
+// Make it so when as the poster of a dvertisement if you click a bid it opens a chat with them or makes it if there is none
+
 
 
 // Route::get('/', function () {
@@ -64,6 +71,17 @@ Route::get('/advertisements', [AdvertisementController::class, 'index'])->name('
 Route::get('/advertisements/{advertisement}/edit',[AdvertisementController::class, 'edit'])->name('advertisements.edit');
 Route::put('/advertisements/{advertisement}/edit',[AdvertisementController::class, 'update'])->name('advertisements.update');
 Route::delete('/advertisements/{advertisement}',[AdvertisementController::class, 'destroy'])->name('advertisements.delete');
-Route::get('/advertisements/{advertisement}', [AdvertisementController::class, 'show'])->name('advertisement.show');
+Route::get('/advertisements/{advertisement}', [AdvertisementController::class, 'show'])->name('advertisements.show');
+
+//Bids
+Route::post('/advertisements/{advertisement}', [BidController::class, 'store'])->name('bids.store');
+
+//Chats
+Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
+Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('chats.show');
+Route::post('/chats', [ChatController::class, 'store'])->name('chats.store');
+
+//Messages
+Route::post('/chats/{chat}', [MessageController::class, 'store'])->name('messages.store');
 
 Route::get('/dashboard', function () {if(Auth::check()){return view('dashboard');}else{return redirect(route('login'));}})->name('dashboard');

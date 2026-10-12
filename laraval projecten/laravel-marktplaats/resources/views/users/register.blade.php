@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Page Title')
+
+@section('content')
 <form action="{{route('users.store')}}" method="POST">
     <label for="name">Enter Name:</label>
     <input type="text" name="name" id="name" placeholder="John Doe" value="{{old('name')}}">
@@ -13,5 +18,5 @@
     <br>
     <button type="submit">Register</button>
 </form>
-
+@endsection
 @include('partials/errors')
