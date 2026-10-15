@@ -27,7 +27,4 @@ class Advertisement extends Model
         return $this->hasMany(Message::class);
     }
 
-    public function chats() {
-        return $this->hasMany(Chat::class);
-    }
 }

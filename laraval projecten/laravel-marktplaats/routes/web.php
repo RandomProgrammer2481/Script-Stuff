@@ -15,15 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 // To do:
 // Make an seeder and factory for chats and messages
-// make an view to show all the chat you're in
+// make an view to show all the chats you're in
 // Make an view to show one specific chat
-// Make it so when as the poster of a dvertisement if you click a bid it opens a chat with them or makes it if there is none
+// Make it so when as the poster of an advertisement if you click a bid it opens a chat with them or makes it if there is none
+// Make a functioning Navbar
 
-
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 
 // User Registration
@@ -64,8 +60,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 
 //Advertisements
-Route::get('/create', [AdvertisementController::class, 'create'])->name('advertisements.create');
-Route::post('/create', [AdvertisementController::class, 'store'])->name('advertisements.store');
+Route::get('/advertisements/create', [AdvertisementController::class, 'create'])->name('advertisements.create');
+Route::post('/advertisements/create', [AdvertisementController::class, 'store'])->name('advertisements.store');
 Route::get('/users/{user}/advertisements',[AdvertisementController::class, 'byUser'])->name('user.advertisements.index');
 Route::get('/advertisements', [AdvertisementController::class, 'index'])->name('advertisements.index');
 Route::get('/advertisements/{advertisement}/edit',[AdvertisementController::class, 'edit'])->name('advertisements.edit');
@@ -80,8 +76,13 @@ Route::post('/advertisements/{advertisement}', [BidController::class, 'store'])-
 Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
 Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('chats.show');
 Route::post('/chats', [ChatController::class, 'store'])->name('chats.store');
+Route::get('/chats/create/{user}', [ChatController::class, 'create'])->name('chats.create');
 
 //Messages
 Route::post('/chats/{chat}', [MessageController::class, 'store'])->name('messages.store');
 
+Route::get('/advertisements/{advertisement}/promote', [AdvertisementController::class, 'promote'])->name('advertisements.promote');
+
 Route::get('/dashboard', function () {if(Auth::check()){return view('dashboard');}else{return redirect(route('login'));}})->name('dashboard');
+
+Route::redirect('/', '/advertisements');

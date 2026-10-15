@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAdvertisementRequest;
+use App\Http\Requests\UpdateAdvertisementRequest;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\User;
@@ -90,7 +91,7 @@ class AdvertisementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreAdvertisementRequest $request, Advertisement $advertisement)
+    public function update(UpdateAdvertisementRequest $request, Advertisement $advertisement)
     {
         $advertisement->update($request->validated());
 
@@ -104,5 +105,17 @@ class AdvertisementController extends Controller
     {
         $advertisement->delete();
         return redirect()->route('user.advertisements.index', Auth::user());
+    }
+
+    public function promote(Advertisement $advertisement)
+    {
+        if (!Auth::check()){
+            return redirect()->route('login');
+        }
+        elseif (Auth::id() != $advertisement->user_id){
+            return redirect()->back();
+        }
+
+        return view('advertisements.promote', compact('advertisement'));
     }
 }

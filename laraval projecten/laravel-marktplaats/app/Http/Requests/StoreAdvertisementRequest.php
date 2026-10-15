@@ -24,10 +24,10 @@ class StoreAdvertisementRequest extends FormRequest
     {
         return [
             'title' => ['required', 'min:4', 'max:256'],
-            'price' => ['required', 'decimal:2', 'Between:0', '10000'],
+            'price' => ['required', 'decimal:0,2','Between:0,10000'],
             'description' => ['required'],
             'category_id' => ['required'],
-            
+            'is_promoted' => ['bool']
         ];
     }
 }

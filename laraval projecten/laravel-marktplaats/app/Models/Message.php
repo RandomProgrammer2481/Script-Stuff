@@ -9,6 +9,8 @@ class Message extends Model
 {
     use HasFactory;    
 
+    protected $fillable = ['body', 'user_id', 'advertisement_id', 'chat_id']; 
+
     public function advertisement() {
         return $this->hasMany(Advertisement::class);
     }

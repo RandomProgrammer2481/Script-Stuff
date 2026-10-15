@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMessageRequest;
+use App\Models\Chat;
+use App\Models\Message;
+use App\Notifications\NewMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
@@ -25,9 +30,28 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMessageRequest $request, Chat $chat)
     {
-        //
+        $arguments = [
+            'body' => $request->validated('body'),
+            'user_id' => Auth::user()->id,
+            'chat_id' => $chat->id,
+            'advertisement_id' => null
+        ];
+
+        Message::create($arguments);
+        
+        
+        if ($chat->user_1_id === Auth::id()) {
+            $user = $chat->user_2;
+        } else {
+            $user = $chat->user_1;
+        }
+     
+
+        $user->notify(new NewMessage($chat));
+
+        return redirect()->back();
     }
 
     /**
