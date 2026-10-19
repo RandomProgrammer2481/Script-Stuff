@@ -20,6 +20,7 @@ class BookFactory extends Factory
     {
         return [
             'title' => fake()->word(),
+            'summary' => fake()->paragraphs(2, true),
             'author_id' => Author::inRandomOrder()->first()->id,
         ];
     }
