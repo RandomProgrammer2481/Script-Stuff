@@ -20,5 +20,5 @@
         "resolveJsonModule": true,
         "ignoreDeprecations": "6.0",
     },
-    "include": ["resources/js/**/*", "resources/js/vite.config.ts"]
+    "include": ["resources/js/**/*", "vite.config.ts"]
 }
