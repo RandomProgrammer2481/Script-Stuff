@@ -1,6 +1,6 @@
 <div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
     <div class="flex flex-col gap-4">
-
+    @if($advertisements->isNotEmpty())
     @foreach($advertisements as $advertisement)
     <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 transition hover:shadow-md">
         <a href="{{route('advertisements.show', $advertisement)}}" class="block">
@@ -40,6 +40,11 @@
         </a>
     </div>
     @endforeach
+    @else
+    <div class="flex justify-items justify-center">
+        <h1 class="text-4xl text-style-bold">No Advertisements to be seen!</h1>
+    </div>
+    @endif
 
     </div>
 </div>

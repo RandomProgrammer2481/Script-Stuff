@@ -7,18 +7,12 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
-
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // To do:
-// Make an seeder and factory for chats and messages
-// make an view to show all the chats you're in
-// Make an view to show one specific chat
-// Make it so when as the poster of an advertisement if you click a bid it opens a chat with them or makes it if there is none
-// Make a functioning Navbar
+//  Make the diagram and deliver product
 
 
 
@@ -40,23 +34,12 @@ Route::get('/reset-password/{token}',[PasswordController::class, 'edit'] )->midd
 Route::post('/reset-password',[PasswordController::class, 'update'] )->middleware('guest')->name('password.update');
 
 
-// !! TOO MESSY, CHANGE THIS INTO A CONTROLLER LATER !!
 // Email verification 
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+Route::get('/email/verify', [VerificationController::class, 'show'])->middleware('auth')->name('verification.notice');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
- 
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'store'])->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
- 
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::post('/email/verification-notification', [VerificationController::class, 'update'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 //Advertisements
@@ -68,6 +51,7 @@ Route::get('/advertisements/{advertisement}/edit',[AdvertisementController::clas
 Route::put('/advertisements/{advertisement}/edit',[AdvertisementController::class, 'update'])->name('advertisements.update');
 Route::delete('/advertisements/{advertisement}',[AdvertisementController::class, 'destroy'])->name('advertisements.delete');
 Route::get('/advertisements/{advertisement}', [AdvertisementController::class, 'show'])->name('advertisements.show');
+Route::get('/advertisements/{advertisement}/promote', [AdvertisementController::class, 'promote'])->name('advertisements.promote');
 
 //Bids
 Route::post('/advertisements/{advertisement}', [BidController::class, 'store'])->name('bids.store');
@@ -80,8 +64,6 @@ Route::get('/chats/create/{user}', [ChatController::class, 'create'])->name('cha
 
 //Messages
 Route::post('/chats/{chat}', [MessageController::class, 'store'])->name('messages.store');
-
-Route::get('/advertisements/{advertisement}/promote', [AdvertisementController::class, 'promote'])->name('advertisements.promote');
 
 Route::get('/dashboard', function () {if(Auth::check()){return view('dashboard');}else{return redirect(route('login'));}})->name('dashboard');
 

@@ -26,7 +26,7 @@ class UpdateAdvertisementRequest extends FormRequest
             'title' => ['min:4', 'max:256'],
             'price' => ['decimal:0,2','Between:0,10000'],
             'description' => [],
-            'category_id' => [],
+            'category_id' => ['integer'],
             'is_promoted' => ['bool']
         ];
     }

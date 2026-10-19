@@ -23,7 +23,7 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'body' => ['required', 'max:384']
+            'body' => ['required', 'max:512']
         ];
     }
 }

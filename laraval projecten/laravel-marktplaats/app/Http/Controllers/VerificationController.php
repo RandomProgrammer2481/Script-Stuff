@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class VerificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,17 +26,19 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EmailVerificationRequest $request)
     {
-        //
+        $request->fulfill();
+ 
+        return redirect('/');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        return view('auth.verify-email');
     }
 
     /**
@@ -49,9 +52,11 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->user()->sendEmailVerificationNotification();
+ 
+        return back()->with('message', 'Verification link sent!');
     }
 
     /**
