@@ -1,9 +1,3 @@
-<script setup lang="ts">
-    import { onMounted } from 'vue';
-    import { fetchAuthors, getAllAuthors } from '../store';
-
-    fetchAuthors();
-</script>
 
 <template>
     <table>
@@ -17,3 +11,9 @@
         </tr>
     </table>
 </template>
+
+<script setup lang="ts">
+    import { fetchAuthors, getAllAuthors } from '../store';
+
+    fetchAuthors();
+</script>

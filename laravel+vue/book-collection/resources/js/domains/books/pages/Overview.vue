@@ -1,10 +1,3 @@
-<script setup lang="ts">
-    import { onMounted } from 'vue';
-    import { fetchBooks, getAllBooks } from '../store';
-
-    fetchBooks();
-</script>
-
 <template>
     <table>
         <thead>
@@ -16,6 +9,13 @@
         <tr v-for="book in getAllBooks" :key="book.id">
             <td>{{ book.title }}</td>
             <td>{{ book.summary }}</td>
+            <RouterLink :to="{ name: 'books.edit', params: { id: book.id } }">Bewerk</RouterLink>
         </tr>
     </table>
 </template>
+
+<script setup lang="ts">
+    import { fetchBooks, getAllBooks } from '../store';
+
+    fetchBooks();
+</script>

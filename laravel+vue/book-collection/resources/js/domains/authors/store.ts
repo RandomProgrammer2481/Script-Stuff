@@ -1,9 +1,14 @@
 import axios from 'axios';
-import { error, log } from 'node:console';
 import { ref, computed, Ref } from 'vue';
 
+export interface Author{
+    id: number;
+    name: string;
+}
+export interface AuthorsRef extends Ref<Author[]>{}
+
 // state
-const authors:Ref = ref([]);
+const authors: AuthorsRef = ref([]);
 
 // getters
 export const getAllAuthors = computed(() => authors.value);
@@ -13,5 +18,4 @@ export const fetchAuthors = async () => {
     const {data} = await axios.get('/api/authors');
     if(!data) return
     authors.value = data;
-    console.log(data)
 };
