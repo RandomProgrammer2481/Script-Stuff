@@ -47,4 +47,3 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
 
     return { getters, setters, actions };
 };
-

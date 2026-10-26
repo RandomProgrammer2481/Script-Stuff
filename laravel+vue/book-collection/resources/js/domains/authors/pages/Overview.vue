@@ -12,11 +12,16 @@
             <td><button @click="authorStore.actions.delete(author.id)">Verwijder</button></td>
         </tr>
     </table>
+
+    <div v-if="getMessage">
+       * {{ getMessage }}
+    </div>
 </template>
 
 <script setup lang="ts">
+    import { getMessage } from '../../../services/error';
     import { authorStore } from '../store';
+    
     authorStore.actions.getAll();
-
     const authors = authorStore.getters.all;
 </script>
