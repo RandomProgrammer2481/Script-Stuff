@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { error, log } from 'node:console';
 import { ref, computed, Ref } from 'vue';
 
 // state
@@ -12,4 +13,5 @@ export const fetchAuthors = async () => {
     const {data} = await axios.get('/api/authors');
     if(!data) return
     authors.value = data;
+    console.log(data)
 };
