@@ -8,17 +8,17 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import Form from '../components/Form.vue';
-import { Book, fetchBooks, getBookById, updateBook } from '../store';
+import { Book, bookStore } from '../store';
 
 const route = useRoute();
 const router = useRouter();
 
-fetchBooks();
+const books = bookStore.getters.all;
 
-const book = getBookById(Number(route.params.id));
+const book = bookStore.getters.getById(Number(route.params.id));
 
 const handleSubmit = async (data: Book) => {
-    await updateBook(Number(route.params.id), data);
+    await bookStore.actions.update(Number(route.params.id), data);
     router.push({ name: 'books.overview' });
 };
 </script>

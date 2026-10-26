@@ -8,7 +8,7 @@
 
         <label>Auteur:</label>
         <select v-model="form.author_id" required>
-            <option v-for="author in getAllAuthors" :key="author.id" :value="author.id">
+            <option v-for="author in authors" :key="author.id" :value="author.id">
                 {{ author.name }}
             </option>
         </select>
@@ -19,10 +19,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { fetchAuthors, getAllAuthors } from '../../authors/store';
+import { authorStore } from '../../authors/store';
 
 // Fetch authors when component is mounted
-fetchAuthors();
+const authors = authorStore.getters.all;
 
 const props = defineProps({ book: Object });
 
