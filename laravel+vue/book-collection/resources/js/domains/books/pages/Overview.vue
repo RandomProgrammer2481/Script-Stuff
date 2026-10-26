@@ -10,12 +10,13 @@
             <td>{{ book.title }}</td>
             <td>{{ book.summary }}</td>
             <RouterLink :to="{ name: 'books.edit', params: { id: book.id } }">Bewerk</RouterLink>
+            <button @click="deleteBook(book.id)">Verwijder</button>
         </tr>
     </table>
 </template>
 
 <script setup lang="ts">
-    import { fetchBooks, getAllBooks } from '../store';
+    import { deleteBook, fetchBooks, getAllBooks } from '../store';
 
     fetchBooks();
 </script>

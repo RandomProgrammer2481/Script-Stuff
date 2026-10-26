@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Form from '../components/Form.vue';
 import { Book, fetchBooks, getBookById, updateBook } from '../store';
