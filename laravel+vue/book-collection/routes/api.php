@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,7 @@ Route::post('/books', [BookController::class, 'store']);
 Route::put('/books/{book}', [BookController::class, 'update']);
 Route::delete('/books/{book}', [BookController::class, 'destroy']);
 
+Route::get('/books/{book}/reviews', [ReviewController::class, 'index']);
+Route::post('/books/{book}/reviews', [ReviewController::class, 'store']);
+Route::put('/books/{book}/reviews/{review}', [ReviewController::class, 'update']);
+Route::delete('/books/{book}/reviews/{review}', [ReviewController::class, 'destroy']);

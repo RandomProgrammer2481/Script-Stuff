@@ -23,7 +23,7 @@ class ReviewFactory extends Factory
             'score' => fake()->numberBetween(0,10),
             'body' => fake()->sentences(5, true),
             'book_id' => Book::inRandomOrder()->first()->id,
-            'user_id' => User::inRandomOrder()->first()->id,
+            'username' => User::inRandomOrder()->first()->name,
         ];
     }
 }

@@ -8,8 +8,8 @@
         </thead>
         <tr v-for="author in authors" :key="author.id">
             <td>{{ author.name }}</td>
-            <td><RouterLink :to="{ name: 'authors.edit', params: { id: author.id } }">Bewerk</RouterLink></td>
-            <td><button @click="authorStore.actions.delete(author.id)">Verwijder</button></td>
+            <td><RouterLink :to="{ name: 'authors.edit', params: { id: author.id } }">Bewerk</RouterLink> | 
+            <button @click="authorStore.actions.delete(author.id)">Verwijder</button></td>
         </tr>
     </table>
 
