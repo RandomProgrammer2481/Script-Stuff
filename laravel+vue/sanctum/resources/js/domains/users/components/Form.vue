@@ -15,8 +15,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-
-
 const props = defineProps({ user: Object });
 
 const emit = defineEmits(['submit']);
