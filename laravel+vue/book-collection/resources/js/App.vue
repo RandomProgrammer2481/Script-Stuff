@@ -6,4 +6,4 @@
         <router-link :to="{name: 'authors.create'}">Nieuwe Auteur</router-link> 
     </nav>
     <router-view></router-view>
-</template>
+</template>s
