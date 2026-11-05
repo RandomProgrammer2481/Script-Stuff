@@ -30,8 +30,8 @@ class TicketFactory extends Factory
             'title' => fake()->word(),
             'body' => fake()->paragraph(5),
             'status_id' => Status::inRandomOrder()->first()->id,
-            'created_by_user_id' => $creator_id,
-            'assigned_to_user_id' => $assignee_id
+            'creator_id' => $creator_id,
+            'assignee_id' => $assignee_id
         ];
     }
 }

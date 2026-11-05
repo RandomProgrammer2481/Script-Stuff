@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title', 255);
             $table->text('body');
             $table->foreignId('status_id')->constrained('statuses');
-            $table->foreignId('created_by_user_id')->constrained('users');
-            $table->foreignId('assigned_to_user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('creator_id')->constrained('users');
+            $table->foreignId('assignee_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

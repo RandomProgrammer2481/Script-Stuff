@@ -1,4 +1,5 @@
 import { storeModuleFactory } from "../../services/store.ts";
+import { User } from "../users/store.js";
 
 export interface Ticket {
     'id': number
@@ -6,10 +7,21 @@ export interface Ticket {
     'body': string,
     'created_at': Date,
     'updated_at': Date,
-    'category_id': number,
-    'status_id': number,
-    'creator_id': number,
-    'assignee_id': number
+    'categories': Array<Category>,
+    'status': Status,
+    'creator': User,
+    'assignee': User
 }
 
-export const ticketStore = storeModuleFactory('tickets')
+export interface Status {
+    'id': number,
+    'title': string
+}
+
+export interface Category {
+    'id': number,
+    'title': string,
+    'created_at': Date,
+}
+
+export const ticketStore = storeModuleFactory<Ticket>('tickets')

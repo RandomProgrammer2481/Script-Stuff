@@ -24,6 +24,7 @@ const handleSubmit = async (data: Auth) => {
         console.log(data)
         await postRequest('login', data)
     });
+
     router.push('/tickets')
 };
 </script>

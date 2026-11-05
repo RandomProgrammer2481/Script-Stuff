@@ -1,0 +1,7 @@
+export interface User {
+    'id': number,
+    'name': string,
+    'email': string,
+    'created_at': Date,
+    'is_admin': boolean,
+}
