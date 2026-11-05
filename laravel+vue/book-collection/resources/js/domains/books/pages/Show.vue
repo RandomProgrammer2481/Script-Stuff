@@ -6,11 +6,11 @@
     </div>
     <br>
     <div>
-        <Create :book-id="bookId"></Create>
+        <Create :bookId="bookId"></Create>
     </div>
     <br>
     <div>
-        <Overview :book-id="bookId"></Overview>
+        <ReviewOverview :book-id="bookId"></ReviewOverview>
     </div>
 </template>
 
@@ -20,7 +20,7 @@
     import { authorStore } from '../../authors/store';
     import { computed, onMounted } from 'vue';
     import Create from '../../reviews/components/Create.vue';
-import Overview from '../../reviews/pages/Overview.vue';
+    import ReviewOverview from '../../reviews/components/Review-Overview.vue';
 
     const route = useRoute();
     const bookId = computed(() => Number(route.params.id));
@@ -32,7 +32,7 @@ import Overview from '../../reviews/pages/Overview.vue';
     );
 
     onMounted(() => {
-        bookStore.actions.getAll();
-        authorStore.actions.getAll();
+        bookStore.actions.fetchAll();
+        authorStore.actions.fetchAll();
     });
 </script>

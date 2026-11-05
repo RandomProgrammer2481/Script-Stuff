@@ -7,7 +7,7 @@
             <p>
                 <button @click="editingId = review.id">Bewerk</button>
                  | 
-                <button @click="reviewStore(Number(props.bookId)).actions.delete(review.id)">Verwijder</button>
+                <button @click="reviewStore.actions.delete(review.id)">Verwijder</button>
             </p>
         </div>
         <div v-else>
@@ -24,23 +24,21 @@
 
 <script setup lang="ts">
     import { onMounted, ref } from 'vue';
-    import { reviewStore } from '../store';
+    import { reviewStore } from '../../reviews/store';
     import Edit from '../components/Edit.vue';
 
     const props = defineProps({ bookId: Number })
-
-    const reviewModule = reviewStore(Number(props.bookId));       
-    const reviews = reviewModule.getters.all;
-
+  
+    const reviews = reviewStore.getters.getByBookId(Number(props.bookId));
 
     const editingId = ref<number | null>(null);
 
     async function onSubmitted() {
-        await reviewModule.actions.getAll();
+        await reviewStore.actions.fetchByBookId(Number(props.bookId));
         editingId.value = null;
     }
     
     onMounted(() => {
-        reviewModule.actions.getAll();
+        reviewStore.actions.fetchByBookId(Number(props.bookId));
     })
 </script>

@@ -21,6 +21,6 @@
     const books = bookStore.getters.all;
 
     onMounted(() => {
-        bookStore.actions.getAll()
+        bookStore.actions.fetchAll()
     });
 </script>

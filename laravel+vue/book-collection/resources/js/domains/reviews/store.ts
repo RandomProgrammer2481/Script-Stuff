@@ -1,5 +1,6 @@
-import { Ref } from "vue";
+import { computed, Ref } from "vue";
 import { storeModuleFactory } from "../../services/store";
+import { getRequest } from "../../services/http";
 
 export interface Review{
     id: number;
@@ -13,6 +14,21 @@ export interface ReviewsRef extends Ref<Review[]>{}
 export type ReviewUpdate = Partial<Omit<Review, 'id'>>;
 export type NewReview = Omit<Review, 'id'>;
 
-export const reviewStore = (id: number) => {return storeModuleFactory<Review>(`/books/${id}/reviews`)}
+const baseReviewStore = storeModuleFactory<Review>('reviews')
 
+export const reviewStore =  {
+    setters: {...baseReviewStore.setters},
+    getters: {...baseReviewStore.getters,
+        getByBookId: (bookId: number) => computed (() => 
+            Object.values(baseReviewStore.getters.all.value)
+            .filter(review => review.book_id === bookId))
+    },
+    actions: {...baseReviewStore.actions,
+        fetchByBookId: async (bookId: number) => {
+            const {data} = await getRequest('reviews');
+            if (!data) return;
+            baseReviewStore.setters.setAll(data);
+        }
+    }
+}
 

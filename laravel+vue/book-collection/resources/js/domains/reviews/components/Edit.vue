@@ -15,7 +15,7 @@
     const review = ref({...props.review})
 
     const handleSubmit = async (data: Review) => {
-        await reviewStore(Number(props.bookId)).actions.update(Number(review.value.id), data);
+        await reviewStore.actions.update(Number(review.value.id), data);
         emit('submitted');
     };
 </script>

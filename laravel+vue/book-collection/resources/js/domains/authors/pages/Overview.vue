@@ -22,6 +22,6 @@
     import { getMessage } from '../../../services/error';
     import { authorStore } from '../store';
     
-    authorStore.actions.getAll();
+    authorStore.actions.fetchAll();
     const authors = authorStore.getters.all;
 </script>

@@ -24,7 +24,8 @@ class StoreReviewRequest extends BaseFormRequest
         return [
             'score' => 'required|integer|between:0,10',
             'body' => 'required|string|min:1|max:511',
-            'username' => 'required|string|min:1|max:127'
+            'username' => 'required|string|min:1|max:127',
+            'book_id' => 'required|integer'
         ];
     }
 }

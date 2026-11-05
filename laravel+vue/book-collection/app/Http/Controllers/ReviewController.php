@@ -11,29 +11,25 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     public function index(Book $book) {
-        return ReviewResource::collection($book->reviews()->latest()->get());
+        return ReviewResource::collection(Review::all());
     }
 
-    public function store(StoreReviewRequest $request, Book $book) {
+    public function store(StoreReviewRequest $request) {
         $validated = $request->validated();
-        
-        $arguments = array_merge($validated,[
-            'book_id' => $book->id
-        ]);
 
-        $review = Review::create($arguments);
+        $review = Review::create($validated);
 
-        $reviews = $book->reviews()->latest()->get();
+        $reviews = Review::all();
         return ReviewResource::collection($reviews);
     }
 
-    public function update(StoreReviewRequest $request, Book $book, Review $review) {
+    public function update(StoreReviewRequest $request, Review $review) {
         $validated = $request->validated();
         
 
         $review->update($validated);
 
-        $reviews = $book->reviews()->latest()->get();
+        $reviews = Review::all();
         return ReviewResource::collection($reviews);
     }
 

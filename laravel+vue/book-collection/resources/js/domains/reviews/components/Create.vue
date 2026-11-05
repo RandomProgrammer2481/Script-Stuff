@@ -18,10 +18,11 @@
     const review = ref({
         score: 0,
         username: '',
-        body: ''
+        body: '',
     });
 
     const handleSubmit = async (data: Review) => {
-        await reviewStore(Number(props.bookId)).actions.create(data);
+        data.book_id = Number(props.bookId)
+        await reviewStore.actions.create(data);
     };
 </script>

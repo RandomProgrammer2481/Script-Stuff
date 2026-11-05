@@ -13,6 +13,10 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
         setAll: (items: T[]) => {
             for (const item of items) state.value[item.id] = Object.freeze(item);
         },
+        
+        setById: (id: number, item: T) => {
+            state.value[id] = Object.freeze(item);
+        },
 
         deleteById: (id: number) => {
             delete state.value[id];
@@ -20,7 +24,7 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
     };
 
     const actions = {
-        getAll: async () => {
+        fetchAll: async () => {
             const { data } = await getRequest(moduleName);
             if (!data) return;
             setters.setAll(data);
