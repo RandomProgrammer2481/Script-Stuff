@@ -9,4 +9,12 @@ class Note extends Model
 {
     /** @use HasFactory<\Database\Factories\NoteFactory> */
     use HasFactory;
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function ticket() {
+        return $this->belongsTo(Ticket::class);
+    }
 }

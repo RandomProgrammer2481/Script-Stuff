@@ -9,4 +9,8 @@ class Status extends Model
 {
     /** @use HasFactory<\Database\Factories\StatusFactory> */
     use HasFactory;
+
+    public function tickets() {
+        return $this->hasMany(Ticket::class);
+    }
 }
