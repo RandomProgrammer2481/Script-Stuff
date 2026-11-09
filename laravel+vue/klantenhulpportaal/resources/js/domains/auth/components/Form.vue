@@ -8,6 +8,8 @@
         <br>
         <input v-model="auth.password" type="password" required>
         <br>
+        <RouterLink :to="{name: 'password.forgot'}">Forgot your password?</RouterLink>
+        <br>
         <button type="submit">Inloggen.</button>
     </form>
 </template>

@@ -21,10 +21,10 @@ const auth = ref({
 
 const handleSubmit = async (data: Auth) => {
     await getRequest('/sanctum/csrf-cookie').then(async response => {
-        console.log(data)
         await postRequest('login', data)
     });
 
     router.push('/tickets')
 };
+
 </script>

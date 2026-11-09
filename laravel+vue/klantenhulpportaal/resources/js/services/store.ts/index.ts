@@ -6,7 +6,7 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
 
     const getters = {
         all: computed(() => state.value),
-        getById: (id: number) => computed(() => state.value[id])
+        getById: (id: number) => computed(() => state.value[id]),
     };
 
     const setters = {

@@ -11,7 +11,7 @@ const http = axios.create({
 http.defaults.withCredentials = true;
 http.defaults.withXSRFToken = true;
 
-export const getRequest = (endpoint: string) => http.get(endpoint);
+export const getRequest = (endpoint: string, params?: Record<string, unknown>) => http.get(endpoint, { params });
 export const postRequest = (endpoint: string, data: any) => http.post(endpoint, data);
 export const putRequest = (endpoint: string, data: any) => http.put(endpoint, data);
 export const deleteRequest = (endpoint: string) => http.delete(endpoint);

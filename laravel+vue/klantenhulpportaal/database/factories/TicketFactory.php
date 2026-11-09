@@ -19,19 +19,15 @@ class TicketFactory extends Factory
      */
     public function definition(): array
     {
-        $creator_id = User::inRandomOrder()->first()->id;
-        $assignee_id = User::inRandomOrder()->first()->id;
-
-        while ($assignee_id === $creator_id) {
-            $assignee_id = User::inRandomOrder()->first()->id;
-        }
+        $assignee = User::where('is_admin', true)->inRandomOrder()->firstOrFail();
+        $creator  = User::whereKeyNot($assignee->id)->inRandomOrder()->firstOrFail();
 
         return [
             'title' => fake()->word(),
             'body' => fake()->paragraph(5),
             'status_id' => Status::inRandomOrder()->first()->id,
-            'creator_id' => $creator_id,
-            'assignee_id' => $assignee_id
+            'creator_id' => $creator->id,
+            'assignee_id' => $assignee->id,
         ];
     }
 }

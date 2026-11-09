@@ -5,12 +5,12 @@ export interface Ticket {
     'id': number
     'title': string,
     'body': string,
-    'created_at': Date,
-    'updated_at': Date,
+    'created_at'? : Date,
+    'updated_at'? : Date,
     'categories': Array<Category>,
-    'status': Status,
-    'creator': User,
-    'assignee': User
+    'status'? : Status,
+    'creator'? : User,
+    'assignee'? : User
 }
 
 export interface Status {
