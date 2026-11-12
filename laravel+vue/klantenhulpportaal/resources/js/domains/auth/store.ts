@@ -20,3 +20,9 @@ export const isAdmin = async (): Promise<boolean> => {
     const { is_admin } = user.data;
     return Boolean(is_admin);
 }
+
+export const getUserId = async (): Promise<number> => {
+    const user = await getRequest('/auth/me');
+    const { id } = user.data;
+    return Number(id);
+}

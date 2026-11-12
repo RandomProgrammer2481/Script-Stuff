@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
+    protected $fillable = ['title', 'body', 'categories', 'creator_id', 'assignee_id', 'status_id'];
+
     /** @use HasFactory<\Database\Factories\TicketFactory> */
     use HasFactory;
 
     public function categories() {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)
+        ->withTimestamps();
     }
 
     public function creator() {

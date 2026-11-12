@@ -8,8 +8,9 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { Status, Ticket, ticketStore } from '../store.js';
+import { User } from '../../users/store.js';
 import Form from '../components/Form.vue';
-import { Ticket, ticketStore } from '../store.js';
 
 const router = useRouter();
 
@@ -18,10 +19,16 @@ const ticket: Ref<Ticket> = ref({
     title: '',
     body: '',
     categories: [],
+    created_at : new Date,
+    updated_at : new Date,
+    status : {} as Status,
+    creator: {} as User,
+    assignee: {} as User
 });
 
-const handleSubmit = async () => {
-    
+const handleSubmit = async (data: Ticket) => {
+    await ticketStore.actions.create(data)
+    router.push({name: "tickets.index"})
 };
 
 </script>

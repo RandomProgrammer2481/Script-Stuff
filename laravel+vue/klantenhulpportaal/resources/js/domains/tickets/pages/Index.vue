@@ -14,16 +14,21 @@
         </thead>
         <tbody>
             <tr v-for="ticket in tickets" :key="ticket.id" class="hover:bg-gray-50">
+                
                 <td class="border border-gray-300 px-4 py-2">{{ ticket.id }}</td>
-                <td class="border border-gray-300 px-4 py-2">{{ ticket.title }}</td>
+                <td class="border border-gray-300 px-4 py-2">
+                    <RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">
+                        {{ ticket.title }}
+                    </RouterLink>
+                </td>
                 <td class="border border-gray-300 px-4 py-2">
                     <p v-for="category in ticket.categories" :key="category.id">{{ category.title }}</p>
                 </td>
-                <td class="border border-gray-300 px-4 py-2">{{ ticket.status.title }}</td>
-                <td class="border border-gray-300 px-4 py-2">{{ ticket.creator.name }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ ticket.status?.title }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ ticket.creator?.name }}</td>
                 <td class="border border-gray-300 px-4 py-2">{{ ticket.created_at }}</td>
                 <td class="border border-gray-300 px-4 py-2">{{ ticket.updated_at }}</td>
-                <td class="border border-gray-300 px-4 py-2">{{ ticket.assignee.name }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ ticket.assignee?.name }}</td>
             </tr>
         </tbody>
     </table>

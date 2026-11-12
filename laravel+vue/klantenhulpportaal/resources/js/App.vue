@@ -1,6 +1,11 @@
 <template>
-<a v-if="authenticated" href="#" @click.prevent="logout">Log out.</a>
-<RouterView></RouterView>
+  <div v-if="authenticated" class="flex items-center gap-4 p-4 border-b">
+    <RouterLink :to="{ name: 'tickets.index' }">View ticket index</RouterLink>
+    <RouterLink :to="{ name: 'tickets.create' }">Make a new ticket</RouterLink>
+    <a href="#" class="ml-auto" @click.prevent="logout">Log out</a>
+  </div>
+
+  <RouterView class="p-4" />
 </template>
 
 <script setup lang="ts">
@@ -25,3 +30,5 @@ const logout = async () => {
     await postRequest('/logout', [])
     router.push('/login')}
 </script>
+
+<style src="@vueform/multiselect/themes/default.css"></style>

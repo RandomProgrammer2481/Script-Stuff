@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->foreignId('ticket_id')->constrained('tickets');
             $table->timestamps();
+
+            
         });
     }
 
