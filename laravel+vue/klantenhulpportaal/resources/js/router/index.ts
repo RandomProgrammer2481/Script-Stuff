@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory, RouteLocationNormalized } from 'vue-router';
 import { ticketRoutes } from '../domains/tickets/routes';
 import { authRoutes } from '../domains/auth/routes';
-import { getUserId, isAdmin, isAuthenticated } from '../domains/auth/store';
 import { userRoutes } from '../domains/users/routes';
 import { errorRoutes } from '../domains/errors/routes';
+import { auth } from '../domains/auth/store';
 
 declare module 'vue-router' {
     interface RouteMeta {
@@ -14,6 +14,8 @@ declare module 'vue-router' {
     }
 }
 
+const { isAuthenticated, isAdmin, userId} = auth()
+
 export const router = createRouter({
     history: createWebHistory(),
     routes: [...ticketRoutes, ...authRoutes, ...userRoutes, ...errorRoutes]
@@ -22,21 +24,18 @@ export const router = createRouter({
 router.beforeEach(async (to) => {
     if (to.meta.public) return true
 
-    if (!(await isAuthenticated())) {
+    if (!isAuthenticated) {
         return { name: 'auth.login' }
     }
 
-    if (to.meta.adminOnly && !(await isAdmin())) {
+    if (to.meta.adminOnly && !isAdmin) {
         return { name: 'errors.403' }
     }
 
     if (to.meta.ownerOnly) {
-        if (await isAdmin()) return true
+        if (isAdmin) return true
 
-        const [ownerId, userId] = await Promise.all([
-            to.meta.ownerOnly(to),
-            getUserId(),
-        ])
+        const ownerId  = await to.meta.ownerOnly(to)
 
         if (ownerId == null || userId == null || String(ownerId) !== String(userId)) {
             return { name: 'errors.403' }

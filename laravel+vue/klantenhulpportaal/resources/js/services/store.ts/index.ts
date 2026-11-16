@@ -15,6 +15,8 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
         },
 
         set: (item: T) => state.value[item.id] = Object.freeze(item),
+        
+        clearAll: () => {state.value = {}},
 
         deleteById: (id: number) => {
             delete state.value[id];
@@ -27,14 +29,14 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
             if (!data) return;
             setters.setAll(data);
         },
-
+        
         create: async (item: T) => {
             const { data } = await postRequest(moduleName, item);
             if (!data) return;
             setters.setAll(data);
         },
 
-        update: async (id: number, item: T) => {
+        update: async (id: number, item: Partial<T>) => {
             const { data } = await putRequest(`${moduleName}/${id}`, item);
             if (!data) return;
             setters.setAll(data);

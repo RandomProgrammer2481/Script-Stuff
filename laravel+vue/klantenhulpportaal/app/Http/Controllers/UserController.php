@@ -4,14 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordResetLinkRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
+    
+    function index(Request $request) {
+        if ($request->user()->cannot('viewAny', User::class)) {
+            abort(403);
+        }
+
+        $users = User::query()
+            ->orderByDesc('created_at')
+            ->orderBy('name')
+            ->get();
+
+        return UserResource::collection($users);
+    }
+
+    function getAdmins(Request $request) {
+        if ($request->user()->cannot('viewAny', User::class)) {
+            abort(403);
+        }
+
+        $users = User::query()
+            ->where('is_admin', true)
+            ->orderByDesc('created_at')
+            ->orderBy('name')
+            ->get();
+
+        return UserResource::collection($users);
+    }
+
     function requestPasswordResetLink(PasswordResetLinkRequest $request)
     {
         $status = Password::sendResetLink($request->validated());

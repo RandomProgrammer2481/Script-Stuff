@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -14,23 +15,31 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/tickets/{ticket}', [TicketController::class, 'show']);
 
+    Route::patch('/tickets/{ticket}/assign', [TicketController::class, 'assign']);
+
     Route::put('/tickets/{ticket}', [TicketController::class, 'update']);
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
 
     Route::get('/categories', [CategoryController::class, 'index']);
 
-    Route::get('/reactions', [ReactionController::class, 'index']);
+    Route::get('/reactions/{ticket_id?}', [ReactionController::class, 'index']);
+
+    Route::get('/auth/me', [AuthController::class, 'me']);
+
+    Route::get('/users', [UserController::class, 'index']);
+
+    Route::get('/users/admins', [UserController::class, 'getAdmins']);
 });
 
 Route::middleware(['guest'])->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/auth/login', [AuthController::class, 'login']);
 
-    Route::post('/forgot-password', [UserController::class, 'requestPasswordResetLink'])->name('password.forgot');
+    Route::post('/auth/forgot-password', [UserController::class, 'requestPasswordResetLink'])->name('password.forgot');
 
-    Route::post('/reset-password', [UserController::class, 'resetPassword'] )->name('password.reset');
+    Route::post('/auth/reset-password', [UserController::class, 'resetPassword'] )->name('password.reset');
 });
 
-Route::get('/auth/me', [AuthController::class, 'me']);
+
 
 

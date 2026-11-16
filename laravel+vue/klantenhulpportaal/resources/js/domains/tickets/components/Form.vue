@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, Ref, ref } from 'vue';
 import { Category, categoryStore } from '../../categories/store';
 import Multiselect from '@vueform/multiselect'
 
@@ -27,7 +27,7 @@ const props = defineProps({ ticket: Object });
 
 const emit = defineEmits(['submit']);
 
-const form = ref({ ...props.ticket,
+const form: Ref = ref({ ...props.ticket,
     categories: (props.ticket?.categories).map((c: Category) => (c.id)),
 });
 

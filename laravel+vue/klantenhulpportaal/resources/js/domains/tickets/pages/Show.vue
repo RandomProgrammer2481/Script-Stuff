@@ -12,10 +12,22 @@
             <p>Status: {{ ticket.status?.title }}</p>
             <p>{{ ticket.body }}</p>
         </div>
-        <div>
+        <br>
+        <div v-if="isAdmin">
+            <p v-if="ticket.assignee">Deze ticket is toegewezen aan {{ ticket.assignee.name }}</p>
+            <form v-else @submit.prevent="handleSubmit">
+                <label>Wijs dit ticket toe aan </label>
+                <select v-model="selectedAdmin">
+                    <option :value="null" disabled>Select an admin</option>
+                    <option v-for="admin in admins" :key="admin.id" :value="admin">{{ admin.name }} </option>
+                </select>
+                <button type="submit" >confirm</button>
+            </form>
+        </div>
+        <br>
+        <div v-if="reactions">
             <div v-for="reaction in reactions">
-                <h6>{{ reaction.user?.name}}</h6>
-                <p>heeft gereageerd op: {{ reaction.created_at }}</p>
+                <p>{{ reaction.user?.name}} heeft gereageerd op {{ reaction.created_at }}</p>
                 <p>{{ reaction.body }}</p>
             </div>
         </div>
@@ -24,15 +36,31 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { ticketStore } from '../store';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { reactionStore } from '../../reactions/store';
-const route = useRoute()
-const ticket = ticketStore.getters.getById(Number(route.params.id))
+import { auth } from '../../auth/store';
+import { User, userStore } from '../../users/store';
 
-const reactions = reactionStore.getters.all
+
+const {isAdmin} = auth()
+const route = useRoute()
+const ticket_id = Number(route.params.id)
+
+const ticket = ticketStore.getters.getById(ticket_id)
+const reactions = reactionStore.getters.getByTicketId(ticket_id)
+const admins = userStore.getters.getAdmins()
+
+const selectedAdmin = ref<User | null>(null);
+
+const handleSubmit = async () => {
+    if (!selectedAdmin.value) return;
+    await ticketStore.actions.assign(ticket_id, selectedAdmin.value);
+};
 
 onMounted(() => {
+    auth().fetchUser()
+    userStore.actions.fetchAdmins()
     ticketStore.actions.fetchAll()
-    reactionStore.actions.fetchAll()
+    reactionStore.actions.fetchByTicketId(ticket_id)
 });
 </script>

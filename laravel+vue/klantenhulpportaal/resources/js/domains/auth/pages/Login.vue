@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Auth } from '../store.js';
+
 import { useRouter } from 'vue-router';
 import Form from '../components/Form.vue';
 import { getRequest, postRequest } from '../../../services/http/index.js';
@@ -19,9 +19,9 @@ const auth = ref({
     password: ''
 });
 
-const handleSubmit = async (data: Auth) => {
+const handleSubmit = async (data: any) => {
     await getRequest('/sanctum/csrf-cookie').then(async response => {
-        await postRequest('login', data)
+        await postRequest('/auth/login', data)
     });
 
     router.push('/tickets')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTicketRequest;
+use App\Http\Requests\UpdateTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -34,14 +35,27 @@ class TicketController extends Controller
 
     }
 
-    public function update(StoreTicketRequest $request, Ticket $ticket){
+    public function update(UpdateTicketRequest $request, Ticket $ticket){
         if ($request->user()->cannot('update', $ticket)) {
             abort(403);
         }
 
-        $validated = $request->safe();    
+        $validated = $request->safe();
+
         $ticket->update($validated->except('categories'));
-        $ticket->categories()->sync($validated->only('categories')['categories']);
+
+        if ($validated->has('categories')) {
+            $ticket->categories()->sync($validated->input('categories'));
+        }
+
+        return new TicketResource($ticket->fresh(['categories', 'assignee', 'status']));
+    }
+
+    public function assign(Request $request, Ticket $ticket){
+
+        $ticket->update(['assignee_id' => $request['id']]);
+
+        return new TicketResource($ticket->fresh(['assignee']));
     }
 
     public function show(Request $request, Ticket $ticket) {

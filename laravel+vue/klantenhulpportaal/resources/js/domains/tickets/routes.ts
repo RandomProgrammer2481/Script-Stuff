@@ -1,4 +1,4 @@
-import { RouteLocation, RouteLocationNormalized} from "vue-router";
+import {RouteLocationNormalized} from "vue-router";
 import Create from "./pages/Create.vue";
 import Edit from "./pages/Edit.vue";
 import Index from "./pages/Index.vue";

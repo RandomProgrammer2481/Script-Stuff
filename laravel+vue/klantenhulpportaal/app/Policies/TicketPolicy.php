@@ -4,22 +4,24 @@ namespace App\Policies;
 
 use App\Models\Ticket;
 use App\Models\User;
-use Illuminate\Http\Response;
+use Illuminate\Auth\Access\Response;
 
 class TicketPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        return false;
+        return $user->is_admin
+            ? Response::allow()
+            : Response::deny('You are not authorized to do this');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Ticket $ticket): bool
+    public function view(User $user, Ticket $ticket): Response
     {
         return $user->is_admin || $user->id === $ticket->creator_id
             ? Response::allow()
@@ -37,7 +39,7 @@ class TicketPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Ticket $ticket): bool
+    public function update(User $user, Ticket $ticket): Response
     {
         return $user->is_admin || $user->id === $ticket->creator_id
             ? Response::allow()
@@ -47,7 +49,7 @@ class TicketPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Ticket $ticket): bool
+    public function delete(User $user, Ticket $ticket): Response
     {
         return $user->is_admin || $user->id === $ticket->creator_id
             ? Response::allow()
@@ -57,7 +59,7 @@ class TicketPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Ticket $ticket): bool
+    public function restore(User $user, Ticket $ticket): Response
     {
         return $user->is_admin
             ? Response::allow()
@@ -67,7 +69,7 @@ class TicketPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Ticket $ticket): bool
+    public function forceDelete(User $user, Ticket $ticket): Response
     {
         return $user->is_admin
             ? Response::allow()

@@ -1,28 +1,32 @@
-import { getRequest } from "../../services/http"
+import { computed, ref } from 'vue';
+import { getRequest, postRequest } from '../../services/http';
+import { User } from '../users/store';
 
 
-export interface Auth {
-    'email' : string,
-    'password' : string,
+const user = ref<User | null>(null);
+
+const isAuthenticated = computed(() => user.value !== null);
+const isAdmin = computed(() => user.value?.is_admin === true);
+const userId = computed(() => user.value?.id ?? null);
+
+async function fetchUser(){
+    const { data } = await getRequest('/auth/me');
+    if(!data) return;
+    user.value = data
 }
 
-export const isAuthenticated = async (): Promise<boolean> => {
-    try {
-        await getRequest('/auth/me');
-        return true;
-    } catch (e) {
-        return false;
-    }
+
+async function logout() {
+    await postRequest('/auth/logout', '');
+    user.value = null;
 }
 
-export const isAdmin = async (): Promise<boolean> => {
-    const user = await getRequest('/auth/me');
-    const { is_admin } = user.data;
-    return Boolean(is_admin);
-}
-
-export const getUserId = async (): Promise<number> => {
-    const user = await getRequest('/auth/me');
-    const { id } = user.data;
-    return Number(id);
+export function auth() {
+    return {
+        isAuthenticated,
+        isAdmin,
+        userId,
+        logout,
+        fetchUser,
+    }    
 }

@@ -1,3 +1,4 @@
+import { patchRequest } from "../../services/http/index.js";
 import { storeModuleFactory } from "../../services/store.ts";
 import { Category } from "../categories/store.js";
 import { User } from "../users/store.js";
@@ -21,4 +22,16 @@ export interface Status {
 
 
 
-export const ticketStore = storeModuleFactory<Ticket>('tickets')
+const baseTicketStore = storeModuleFactory<Ticket>('tickets')
+
+export const ticketStore = {
+    getters: {...baseTicketStore.getters},
+    setters: {...baseTicketStore.setters},
+    actions: {...baseTicketStore.actions,
+        assign: async (ticketId: number, assignee: User) => {
+            const { data } = await patchRequest(`tickets/${ticketId}/assign`, assignee)
+            if (!data) return;
+            baseTicketStore.setters.setAll(data);
+        }
+    }
+}

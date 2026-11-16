@@ -25,7 +25,7 @@ export const reviewStore =  {
     },
     actions: {...baseReviewStore.actions,
         fetchByBookId: async (bookId: number) => {
-            const {data} = await getRequest('reviews');
+            const {data} = await getRequest(`reviews/${bookId}`);
             if (!data) return;
             baseReviewStore.setters.setAll(data);
         }
