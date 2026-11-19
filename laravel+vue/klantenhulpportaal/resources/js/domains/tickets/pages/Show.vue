@@ -55,7 +55,6 @@ const selectedAdmin = ref<User | null>(null);
 const handleSubmit = async () => {
     if (!selectedAdmin.value) return;
     await ticketStore.actions.assign(ticket_id, selectedAdmin.value);
-    await ticketStore.actions.fetchAll()
 };
 
 onMounted(() => {
