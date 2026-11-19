@@ -28,7 +28,7 @@ const ticket: Ref<Ticket> = ref({
 
 const handleSubmit = async (data: Ticket) => {
     await ticketStore.actions.create(data)
-    router.push({name: "tickets.index"})
+    router.push({name: 'tickets.index'})
 };
 
 </script>

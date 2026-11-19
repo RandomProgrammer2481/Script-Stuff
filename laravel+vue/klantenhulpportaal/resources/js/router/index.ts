@@ -14,7 +14,7 @@ declare module 'vue-router' {
     }
 }
 
-const { isAuthenticated, isAdmin, userId} = auth()
+const { isAuthenticated, isAdmin, userId, fetchUser} = auth()
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -24,20 +24,20 @@ export const router = createRouter({
 router.beforeEach(async (to) => {
     if (to.meta.public) return true
 
-    if (!isAuthenticated) {
+    if (isAuthenticated.value === false) {
         return { name: 'auth.login' }
     }
 
-    if (to.meta.adminOnly && !isAdmin) {
+    if (to.meta.adminOnly && isAdmin.value === false) {
         return { name: 'errors.403' }
     }
 
     if (to.meta.ownerOnly) {
-        if (isAdmin) return true
+        if (isAdmin.value === true) return true
 
         const ownerId  = await to.meta.ownerOnly(to)
 
-        if (ownerId == null || userId == null || String(ownerId) !== String(userId)) {
+        if (ownerId == null || userId.value == null || String(ownerId) !== String(userId.value)) {
             return { name: 'errors.403' }
         }
     }

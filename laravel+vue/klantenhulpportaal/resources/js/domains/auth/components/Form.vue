@@ -16,11 +16,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const props = defineProps({ auth: Object });
+const props = defineProps({ credentials: Object });
 
 const emit = defineEmits(['submit']);
 
-const auth = ref({ ...props.auth });
+const auth = ref({ ...props.credentials });
 
 const handleSubmit = () => emit('submit', auth.value);
 </script>

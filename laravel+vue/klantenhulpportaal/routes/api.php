@@ -25,8 +25,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/reactions/{ticket_id?}', [ReactionController::class, 'index']);
 
-    Route::get('/auth/me', [AuthController::class, 'me']);
-
     Route::get('/users', [UserController::class, 'index']);
 
     Route::get('/users/admins', [UserController::class, 'getAdmins']);
@@ -40,6 +38,6 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/auth/reset-password', [UserController::class, 'resetPassword'] )->name('password.reset');
 });
 
-
+Route::get('/auth/me', [AuthController::class, 'me']);
 
 

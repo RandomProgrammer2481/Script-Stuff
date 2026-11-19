@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef, onMounted} from 'vue';
+import {ComputedRef, onMounted} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Ticket, ticketStore } from '../store.js';
 import Form from '../components/Form.vue';
@@ -20,7 +20,7 @@ const ticket:ComputedRef<Ticket> = ticketStore.getters.getById(ticket_id)
 
 const handleSubmit = async (data: Ticket) => {
     await ticketStore.actions.update(ticket_id, data)
-    router.push({name: "tickets.index"})
+    router.push({name: 'tickets.index'})
 };
 
 onMounted(() => {

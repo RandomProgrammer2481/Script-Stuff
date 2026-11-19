@@ -34,12 +34,12 @@
     </div>
 </template>
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import { ticketStore } from '../store';
-import { onMounted, ref } from 'vue';
-import { reactionStore } from '../../reactions/store';
-import { auth } from '../../auth/store';
-import { User, userStore } from '../../users/store';
+import { useRoute } from 'vue-router'
+import { ticketStore } from '../store'
+import { onMounted, ref } from 'vue'
+import { reactionStore } from '../../reactions/store'
+import { auth } from '../../auth/store'
+import { User, userStore } from '../../users/store'
 
 
 const {isAdmin} = auth()
@@ -50,16 +50,16 @@ const ticket = ticketStore.getters.getById(ticket_id)
 const reactions = reactionStore.getters.getByTicketId(ticket_id)
 const admins = userStore.getters.getAdmins()
 
-const selectedAdmin = ref<User | null>(null);
+const selectedAdmin = ref<User | null>(null)
 
 const handleSubmit = async () => {
     if (!selectedAdmin.value) return;
     await ticketStore.actions.assign(ticket_id, selectedAdmin.value);
+    
 };
 
 onMounted(() => {
-    auth().fetchUser()
-    userStore.actions.fetchAdmins()
+    if (isAdmin.value === true) {userStore.actions.fetchAdmins()}
     ticketStore.actions.fetchAll()
     reactionStore.actions.fetchByTicketId(ticket_id)
 });
