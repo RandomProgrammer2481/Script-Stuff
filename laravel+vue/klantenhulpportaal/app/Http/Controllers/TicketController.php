@@ -48,19 +48,19 @@ class TicketController extends Controller
             $ticket->categories()->sync($validated->input('categories'));
         }
 
-        return new TicketResource($ticket->fresh([ 'title', 'body', 'categories', 'assignee', 'status']));
+        return new TicketResource($ticket->fresh([ 'categories', 'assignee', 'status']));
     }
 
     public function assign(Request $request, Ticket $ticket){
 
-        $ticket->update(['assignee_id' => $request['id']]);
+        $ticket->update(['assignee_id' => $request[0]]);
 
         return new TicketResource($ticket->fresh(['assignee']));
     }
 
     public function updateStatus(Request $request, Ticket $ticket){
 
-        $ticket->update(['status_id' => $request['id']]);
+        $ticket->update(['status_id' => $request[0]]);
 
         return new TicketResource($ticket->fresh(['status']));
     }

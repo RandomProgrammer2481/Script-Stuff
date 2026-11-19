@@ -12,8 +12,8 @@
             <div v-if="isAdmin">
                 <div>
                     <label>Status: </label>
-                    <select v-model="selectedStatus" @change="handleStatusUpdate">
-                        <option v-for="status in statuses" :key="status.id" :value="status">
+                    <select v-model="selectedStatusId" @change="handleStatusUpdate">
+                        <option v-for="status in statuses" :key="status.id" :value="status.id">
                             {{ status.title }}
                         </option>
                     </select>
@@ -22,9 +22,9 @@
                     <p v-if="ticket.assignee">Deze ticket is toegewezen aan {{ ticket.assignee.name }}</p>
                     <form v-else @submit.prevent="handleAssigneeUpdate">
                         <label>Wijs dit ticket toe aan </label>
-                        <select v-model="selectedAdmin">
+                        <select v-model="selectedAdminId">
                             <option :value="null" disabled>Select an admin</option>
-                            <option v-for="admin in admins" :key="admin.id" :value="admin">{{ admin.name }} </option>
+                            <option v-for="admin in admins" :key="admin.id" :value="admin.id">{{ admin.name }} </option>
                         </select>
                         <button type="submit" >confirm</button>
                     </form>
@@ -50,8 +50,8 @@ import { ticketStore } from '../store'
 import { onMounted, ref, watch } from 'vue'
 import { reactionStore } from '../../reactions/store'
 import { auth } from '../../auth/store'
-import { User, userStore } from '../../users/store'
-import { Status, statusStore } from '../../statuses/store'
+import { userStore } from '../../users/store'
+import { statusStore } from '../../statuses/store'
 
 
 const {isAdmin} = auth()
@@ -64,25 +64,25 @@ const admins = userStore.getters.getAdmins()
 const statuses = statusStore.getters.all
 
 
-const selectedAdmin = ref<User | null>(null)
-const selectedStatus = ref<Status | null>(null)
+const selectedAdminId = ref<number | null>(null)
+const selectedStatusId = ref<number | null>(null)
 
 const handleAssigneeUpdate = async () => {
-    if (!selectedAdmin.value) return;
-    await ticketStore.actions.assign(ticket_id, selectedAdmin.value);
+    if (selectedAdminId.value === null) return;
+    await ticketStore.actions.assign(ticket_id, selectedAdminId.value);
     await ticketStore.actions.fetchAll(); // refresh the tickets
     
 };
 
 const handleStatusUpdate = async () => {
-    if (!selectedStatus.value) return;
-    await ticketStore.actions.updateStatus(ticket_id, selectedStatus.value);
+    if (selectedStatusId.value === null) return;
+    await ticketStore.actions.updateStatus(ticket_id, selectedStatusId.value);
     await ticketStore.actions.fetchAll(); // refresh the tickets
 };
 
 watch(
-    () => ticket.value?.status,
-    (status) => { selectedStatus.value = status ?? null },
+    () => ticket.value?.status?.id,
+    (id) => { selectedStatusId.value = id ?? null },
     { immediate: true }
 )
 

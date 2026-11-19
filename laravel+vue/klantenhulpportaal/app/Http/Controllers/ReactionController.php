@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ReactionResource;
 use App\Models\Reaction;
-use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+
 
 class ReactionController extends Controller
 {

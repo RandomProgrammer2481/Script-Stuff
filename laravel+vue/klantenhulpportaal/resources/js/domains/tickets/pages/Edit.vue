@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import {ComputedRef, onMounted} from 'vue';
+import { ComputedRef, onMounted} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Ticket, ticketStore } from '../store.js';
 import Form from '../components/Form.vue';

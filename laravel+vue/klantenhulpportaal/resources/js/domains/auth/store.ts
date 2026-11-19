@@ -4,6 +4,7 @@ import { User } from '../users/store';
 import { ticketStore } from '../tickets/store';
 import { categoryStore } from '../categories/store';
 import { reactionStore } from '../reactions/store';
+import { statusStore } from '../statuses/store';
 
 
 const user = ref<User | null>(null);
@@ -31,6 +32,7 @@ function clearStores() {
     ticketStore.setters.clearAll()
     categoryStore.setters.clearAll()
     reactionStore.setters.clearAll()
+    statusStore.setters.clearAll()
 }
 
 export function auth() {
