@@ -14,7 +14,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-const {isAuthenticated} = auth()
+const {fetchUser} = auth()
 
 const credentials = ref({
     email: '',
@@ -24,6 +24,9 @@ const credentials = ref({
 const handleSubmit = async (auth: any) => {
     await getRequest('/sanctum/csrf-cookie').then(async response => {
         await postRequest('/auth/login', auth)
+        
+
+        await fetchUser()
         router.push({name: 'tickets.index'})
     });
 };

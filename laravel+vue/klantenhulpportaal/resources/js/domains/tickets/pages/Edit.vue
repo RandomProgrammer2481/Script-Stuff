@@ -23,7 +23,7 @@ const handleSubmit = async (data: Ticket) => {
     router.push({name: 'tickets.index'})
 };
 
-onMounted(() => {
+onMounted( () => {
     ticketStore.actions.fetchAll()
 });
 </script>

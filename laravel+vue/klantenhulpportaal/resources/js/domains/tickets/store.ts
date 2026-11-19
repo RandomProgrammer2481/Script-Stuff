@@ -1,6 +1,7 @@
 import { patchRequest } from "../../services/http/index.js";
 import { storeModuleFactory } from "../../services/store.ts";
 import { Category } from "../categories/store.js";
+import { Status } from "../statuses/store.js";
 import { User } from "../users/store.js";
 
 export interface Ticket {
@@ -15,11 +16,6 @@ export interface Ticket {
     'assignee'? : User
 }
 
-export interface Status {
-    'id': number,
-    'title': string
-}
-
 
 
 const baseTicketStore = storeModuleFactory<Ticket>('tickets')
@@ -31,7 +27,12 @@ export const ticketStore = {
         assign: async (ticketId: number, assignee: User) => {
             const { data } = await patchRequest(`tickets/${ticketId}/assign`, assignee)
             if (!data) return;
-            baseTicketStore.setters.setAll(data);
+            baseTicketStore.setters.set(data);
+        },
+        updateStatus: async (ticketId: number, status: Status) => {
+            const { data } = await patchRequest(`tickets/${ticketId}/updateStatus`, status)
+            if (!data) return;
+            baseTicketStore.setters.set(data);
         }
     }
 }

@@ -2,6 +2,7 @@
   <div v-if="isAuthenticated" class="flex items-center gap-4 p-4 border-b">
     <RouterLink :to="{ name: 'tickets.index' }">View ticket index</RouterLink>
     <RouterLink :to="{ name: 'tickets.create' }">Make a new ticket</RouterLink>
+    <RouterLink :to="{ name: 'categories.index' }">View category index</RouterLink>
     <a href="#" class="ml-auto" @click.prevent="handleLogout">Log out</a>
   </div>
 

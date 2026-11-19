@@ -35,9 +35,6 @@ const categories = categoryStore.getters.all
 const options = computed(() => Object.values(categories.value).map(c => ({ value: c.id, label: c.title })))
 const handleSubmit = () => emit('submit', form.value);
 
-
-console.log('ticket categories:', props.ticket?.categories);
-console.log('options:', options.value);
 onMounted(() => {
     categoryStore.actions.fetchAll()
 });

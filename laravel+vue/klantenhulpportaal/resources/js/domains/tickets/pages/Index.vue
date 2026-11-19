@@ -36,14 +36,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { ticketStore } from '../store';
-import { auth } from '../../auth/store';
+
 const tickets = ticketStore.getters.all;
-const {fetchUser} = auth()
 
-console.log()
-
-onMounted(() => {
-    fetchUser()
-    ticketStore.actions.fetchAll()
+onMounted(async() => {
+    await ticketStore.actions.fetchAll()
 });
 </script>

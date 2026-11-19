@@ -18,6 +18,12 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
         
         clearAll: () => {state.value = {}},
 
+        replaceAll: (items: T[]) => {
+            const next: Record<string | number, Readonly<T>> = {};
+            for (const item of items) next[item.id] = Object.freeze(item);
+            state.value = next;
+        },
+
         deleteById: (id: number) => {
             delete state.value[id];
         }
@@ -27,19 +33,19 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
         fetchAll: async () => {
             const { data } = await getRequest(moduleName);
             if (!data) return;
-            setters.setAll(data);
+            setters.replaceAll(data);
         },
         
         create: async (item: T) => {
             const { data } = await postRequest(moduleName, item);
             if (!data) return;
-            setters.setAll(data);
+            setters.set(data);
         },
 
         update: async (id: number, item: Partial<T>) => {
             const { data } = await putRequest(`${moduleName}/${id}`, item);
             if (!data) return;
-            setters.setAll(data);
+            setters.set(data);
         },
 
         delete: async (id: number) => {

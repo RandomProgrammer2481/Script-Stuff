@@ -32,7 +32,7 @@ class TicketController extends Controller
         ]);
         $ticket = Ticket::create($arguments);
         $ticket->categories()->sync($validated->only('categories')['categories']);
-
+        return new TicketResource($ticket);
     }
 
     public function update(UpdateTicketRequest $request, Ticket $ticket){
@@ -48,7 +48,7 @@ class TicketController extends Controller
             $ticket->categories()->sync($validated->input('categories'));
         }
 
-        return new TicketResource($ticket->fresh(['categories', 'assignee', 'status']));
+        return new TicketResource($ticket->fresh([ 'title', 'body', 'categories', 'assignee', 'status']));
     }
 
     public function assign(Request $request, Ticket $ticket){
@@ -57,6 +57,14 @@ class TicketController extends Controller
 
         return new TicketResource($ticket->fresh(['assignee']));
     }
+
+    public function updateStatus(Request $request, Ticket $ticket){
+
+        $ticket->update(['status_id' => $request['id']]);
+
+        return new TicketResource($ticket->fresh(['status']));
+    }
+
 
     public function show(Request $request, Ticket $ticket) {
         if ($request->user()->cannot('view', $ticket)) {

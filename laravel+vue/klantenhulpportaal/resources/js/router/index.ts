@@ -4,6 +4,7 @@ import { authRoutes } from '../domains/auth/routes';
 import { userRoutes } from '../domains/users/routes';
 import { errorRoutes } from '../domains/errors/routes';
 import { auth } from '../domains/auth/store';
+import { categoryRoutes } from '../domains/categories/routes';
 
 declare module 'vue-router' {
     interface RouteMeta {
@@ -18,10 +19,11 @@ const { isAuthenticated, isAdmin, userId, fetchUser} = auth()
 
 export const router = createRouter({
     history: createWebHistory(),
-    routes: [...ticketRoutes, ...authRoutes, ...userRoutes, ...errorRoutes]
+    routes: [...ticketRoutes, ...authRoutes, ...userRoutes, ...errorRoutes, ...categoryRoutes]
 });
 
 router.beforeEach(async (to) => {
+    await fetchUser()
     if (to.meta.public) return true
 
     if (isAuthenticated.value === false) {

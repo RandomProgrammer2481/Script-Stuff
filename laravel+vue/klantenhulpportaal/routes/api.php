@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ReactionController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -17,11 +18,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::patch('/tickets/{ticket}/assign', [TicketController::class, 'assign']);
 
+    Route::patch('/tickets/{ticket}/updateStatus', [TicketController::class, 'updateStatus']);
+
     Route::put('/tickets/{ticket}', [TicketController::class, 'update']);
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 
     Route::get('/categories', [CategoryController::class, 'index']);
+
+    Route::get('/statuses', [StatusController::class, 'index']);
 
     Route::get('/reactions/{ticket_id?}', [ReactionController::class, 'index']);
 

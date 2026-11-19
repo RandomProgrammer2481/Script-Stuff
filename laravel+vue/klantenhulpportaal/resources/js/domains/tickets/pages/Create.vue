@@ -8,9 +8,10 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Status, Ticket, ticketStore } from '../store.js';
+import {Ticket, ticketStore } from '../store.js';
 import { User } from '../../users/store.js';
 import Form from '../components/Form.vue';
+import { Status } from '../../statuses/store.js';
 
 const router = useRouter();
 

@@ -39,7 +39,7 @@ class AuthController extends Controller
             return $request->user();
         }
         else {
-            return response(null, 401);
+            return response(null, 202);
             }
         }
 }
