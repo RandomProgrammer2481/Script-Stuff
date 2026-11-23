@@ -16,9 +16,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/tickets/{ticket}', [TicketController::class, 'show']);
 
-    Route::patch('/tickets/{ticket}/assign', [TicketController::class, 'assign']);
+    Route::patch('/tickets/{ticket}/assignee', [TicketController::class, 'assign']);
 
-    Route::patch('/tickets/{ticket}/updateStatus', [TicketController::class, 'updateStatus']);
+    Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus']);
 
     Route::put('/tickets/{ticket}', [TicketController::class, 'update']);
 
@@ -30,12 +30,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::put('/categories/{category}', [CategoryController::class, 'update']);
 
-    Route::delete('/categories/{category}', [CategoryController::class, 'delete']);
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
     
     Route::get('/statuses', [StatusController::class, 'index']);
 
     Route::get('/reactions/{ticket_id?}', [ReactionController::class, 'index']);
-
+    
+    Route::post('/reactions/{ticket}', [ReactionController::class, 'store']);
+  
     Route::get('/users', [UserController::class, 'index']);
 
     Route::get('/users/admins', [UserController::class, 'getAdmins']);

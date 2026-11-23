@@ -27,7 +27,8 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    public function delete(Category $category) {
+    public function destroy(Category $category) {
+        $category->tickets()->detach();
         $category->delete();
         return response()->json(['message' => "Succesfully deleted"]);
     }
