@@ -25,12 +25,12 @@ export const ticketStore = {
     setters: {...baseTicketStore.setters},
     actions: {...baseTicketStore.actions,
         assign: async (ticketId: number, assignee_id: number) => {
-            const { data } = await patchRequest(`tickets/${ticketId}/assignee`, assignee_id)
+            const { data } = await patchRequest(`tickets/${ticketId}/assign`, assignee_id)
             if (!data) return;
             baseTicketStore.setters.set(data);
         },
         updateStatus: async (ticketId: number, status_id: number) => {
-            const { data } = await patchRequest(`tickets/${ticketId}/status`, status_id)
+            const { data } = await patchRequest(`tickets/${ticketId}/updateStatus`, status_id)
             if (!data) return;
             baseTicketStore.setters.set(data);
         }

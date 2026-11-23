@@ -16,6 +16,10 @@ class UserController extends Controller
 {
     
     function index(Request $request) {
+        if ($request->user()->cannot('viewAny', User::class)) {
+            abort(403);
+        }
+
         $users = User::query()
             ->orderByDesc('created_at')
             ->orderBy('name')
@@ -25,6 +29,9 @@ class UserController extends Controller
     }
 
     function getAdmins(Request $request) {
+        if ($request->user()->cannot('viewAny', User::class)) {
+            abort(403);
+        }
 
         $users = User::query()
             ->where('is_admin', true)
