@@ -36,6 +36,8 @@
         </div>
         <br>
         <br>
+        <Create></Create>
+        <br>
         <div v-if="reactions">
             <div v-for="reaction in reactions">
                 <p>{{ reaction.user?.name}} heeft gereageerd op {{ reaction.created_at }}</p>
@@ -52,6 +54,7 @@ import { reactionStore } from '../../reactions/store'
 import { auth } from '../../auth/store'
 import { userStore } from '../../users/store'
 import { statusStore } from '../../statuses/store'
+import Create from '../../reactions/components/Create.vue'
 
 
 const {isAdmin} = auth()

@@ -36,10 +36,6 @@ class TicketController extends Controller
     }
 
     public function update(UpdateTicketRequest $request, Ticket $ticket){
-        if ($request->user()->cannot('update', $ticket)) {
-            abort(403);
-        }
-
         $validated = $request->safe();
 
         $ticket->update($validated->except('categories'));

@@ -9,25 +9,30 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
+
         $categories = Category::query()->orderby('title')->get();
 
         return CategoryResource::collection($categories);
     }
 
     public function store(StoreCategoryRequest $request) {
+
         $category = Category::create($request->validated());
         
         return new CategoryResource($category);
     }
 
     public function update(StoreCategoryRequest $request, Category $category) {
+
         $category->update($request->validated());
         
         return new CategoryResource($category);
     }
 
-    public function delete(Category $category) {
+    public function destroy(Request $request, Category $category) {
+
+        $category->tickets()->detach();
         $category->delete();
         return response()->json(['message' => "Succesfully deleted"]);
     }

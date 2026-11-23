@@ -27,7 +27,7 @@ export const reactionStore = {
     actions: {...baseReactionStore.actions,
         fetchByTicketId: async (ticketId: number) => {
             baseReactionStore.setters.clearAll()
-            const {data} = await getRequest(`reactions/${ticketId}`);
+            const {data} = await getRequest(`tickets/${ticketId}/reactions`);
             if (!data) return;
             baseReactionStore.setters.setAll(data);
         }

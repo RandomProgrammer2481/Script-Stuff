@@ -10,7 +10,7 @@ import { ticketStore } from "./store.js";
 export const ticketRoutes = [
     { path: '/tickets', component: Index, name: 'tickets.index'},
     { path: '/tickets/create', component: Create, name: 'tickets.create'},
-    { path: '/ticket/:id', component: Show, name: 'tickets.show',
+    { path: '/tickets/:id', component: Show, name: 'tickets.show',
         meta: {ownerOnly: (to: RouteLocationNormalized) => ticketStore.getters.getById(Number(to.params.id))?.value?.creator?.id,}},
     { path: '/tickets/:id/edit', component: Edit, name: 'tickets.edit', 
         meta: {ownerOnly: (to: RouteLocationNormalized) => ticketStore.getters.getById(Number(to.params.id))?.value?.creator?.id,}},
