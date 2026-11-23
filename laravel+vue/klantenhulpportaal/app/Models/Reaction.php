@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reaction extends Model
 {
+    protected $fillable = ['body', 'ticket_id', 'user_id'];
+
     /** @use HasFactory<\Database\Factories\ReactionFactory> */
     use HasFactory;
 

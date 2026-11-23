@@ -15,11 +15,7 @@ use Illuminate\Validation\ValidationException;
 class UserController extends Controller
 {
     
-    function index(Request $request) {
-        if ($request->user()->cannot('viewAny', User::class)) {
-            abort(403);
-        }
-
+    function index() {
         $users = User::query()
             ->orderByDesc('created_at')
             ->orderBy('name')
@@ -28,11 +24,7 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    function getAdmins(Request $request) {
-        if ($request->user()->cannot('viewAny', User::class)) {
-            abort(403);
-        }
-
+    function getAdmins() {
         $users = User::query()
             ->where('is_admin', true)
             ->orderByDesc('created_at')

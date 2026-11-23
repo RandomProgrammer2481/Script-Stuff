@@ -1,7 +1,6 @@
 <template>
     <form @submit.prevent="handleSubmit">
         <textarea v-model="form.body" required></textarea>
-        <br>
         <button type="submit">Opslaan</button>
     </form>
 </template>

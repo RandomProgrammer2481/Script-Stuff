@@ -36,10 +36,6 @@ class TicketController extends Controller
     }
 
     public function update(UpdateTicketRequest $request, Ticket $ticket){
-        if ($request->user()->cannot('update', $ticket)) {
-            abort(403);
-        }
-
         $validated = $request->safe();
 
         $ticket->update($validated->except('categories'));
@@ -52,14 +48,12 @@ class TicketController extends Controller
     }
 
     public function assign(Request $request, Ticket $ticket){
-
         $ticket->update(['assignee_id' => $request[0]]);
 
         return new TicketResource($ticket->fresh(['assignee']));
     }
 
     public function updateStatus(Request $request, Ticket $ticket){
-
         $ticket->update(['status_id' => $request[0]]);
 
         return new TicketResource($ticket->fresh(['status']));
@@ -67,10 +61,6 @@ class TicketController extends Controller
 
 
     public function show(Request $request, Ticket $ticket) {
-        if ($request->user()->cannot('view', $ticket)) {
-            abort(403);
-        }
-
         return new TicketResource($ticket);
     }
 }

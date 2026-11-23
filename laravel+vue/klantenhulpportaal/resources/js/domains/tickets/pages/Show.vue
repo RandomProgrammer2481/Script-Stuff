@@ -36,11 +36,16 @@
         </div>
         <br>
         <br>
-        <Create></Create>
+        <Create v-if="isAdmin"></Create>
+        <br>
         <div v-if="reactions">
             <div v-for="reaction in reactions">
-                <p>{{ reaction.user?.name}} heeft gereageerd op {{ reaction.created_at }}</p>
-                <p>{{ reaction.body }}</p>
+                <Edit :reaction="reaction" v-if="editingReactionId === reaction.id" @submitted="editingReactionId = null"></Edit>
+                <div v-else>
+                    <p>{{ reaction.user.name}} heeft gereageerd op {{ reaction.created_at }}</p>
+                    <p>{{ reaction.body }}</p>
+                    <button @click="editingReactionId = reaction.id">Edit</button>
+                </div>
             </div>
         </div>
     </div>
@@ -54,20 +59,21 @@ import { auth } from '../../auth/store'
 import { userStore } from '../../users/store'
 import { statusStore } from '../../statuses/store'
 import Create from '../../reactions/components/Create.vue'
-
+import Edit from '../../reactions/components/Edit.vue'
 
 const {isAdmin} = auth()
 const route = useRoute()
 const ticket_id = Number(route.params.id)
 
 const ticket = ticketStore.getters.getById(ticket_id)
-const reactions = reactionStore.getters.getByTicketId(ticket_id)
+const reactions = reactionStore.getters.all
 const admins = userStore.getters.getAdmins()
 const statuses = statusStore.getters.all
 
 
 const selectedAdminId = ref<number | null>(null)
 const selectedStatusId = ref<number | null>(null)
+const editingReactionId = ref<number | null>(null)
 
 const handleAssigneeUpdate = async () => {
     if (selectedAdminId.value === null) return;

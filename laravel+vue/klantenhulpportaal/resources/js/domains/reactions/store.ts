@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { storeModuleFactory } from "../../services/store.ts";
-import { User } from "../users/store.js";
 import { getRequest } from "../../services/http/index.js";
+import { User } from "../users/store.js";
 import { Ticket } from "../tickets/store.js";
 
 export interface Reaction {

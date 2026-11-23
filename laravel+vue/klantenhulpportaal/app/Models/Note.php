@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
+    protected $fillable = ['body', 'ticket_id', 'user_id'];
     /** @use HasFactory<\Database\Factories\NoteFactory> */
     use HasFactory;
 

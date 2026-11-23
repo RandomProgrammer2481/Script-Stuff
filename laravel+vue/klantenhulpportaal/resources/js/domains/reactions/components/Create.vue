@@ -7,24 +7,23 @@
 
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import {Reaction, reactionStore } from '../store.js';
-import { User } from '../../users/store.js';
+import {reactionStore } from '../store.js';
 import Form from '../components/Form.vue';
-import { Ticket } from '../../tickets/store.js';
+import { useRoute } from 'vue-router';
 
-const router = useRouter();
+const route = useRoute()
 
-const reaction: Ref<Reaction> = ref({
+const reaction: Ref = ref({
     id: NaN,
     body: '',
     created_at : new Date,
     updated_at : new Date,
-    user: {} as User,
-    ticket: {} as Ticket
+    user: NaN,
+    ticket_id: NaN,
 });
 
-const handleSubmit = async (data: Reaction) => {
+const handleSubmit = async (data: any) => {
+    data.ticket_id = Number(route.params.id)
     await reactionStore.actions.create(data)
 };
 

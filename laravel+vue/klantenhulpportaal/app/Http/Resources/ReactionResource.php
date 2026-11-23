@@ -17,7 +17,7 @@ class ReactionResource extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'user' => $this->user,
+            'user' => new UserResource($this->user),
             'ticket' => new TicketResource($this->ticket),
             'created_at' => $this->created_at->format('d/m/Y H:i'),
             'updated_at' => $this->updated_at->format('d/m/Y H:i'),
