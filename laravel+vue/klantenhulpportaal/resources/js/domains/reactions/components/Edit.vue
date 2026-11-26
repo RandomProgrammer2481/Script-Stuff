@@ -19,7 +19,6 @@ const emit = defineEmits<{ (e: 'submitted'): void }>()
 const reaction: Ref = ref({...props.reaction})
 
 const handleSubmit = async (data: any) => {
-    data.ticket_id = Number(route.params.id)
     await reactionStore.actions.update(reaction.value.id, data)
     emit("submitted")
 };

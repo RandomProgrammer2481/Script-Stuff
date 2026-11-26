@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
-import {reactionStore } from '../store.js';
+import {Reaction, reactionStore } from '../store.js';
 import Form from '../components/Form.vue';
 import { useRoute } from 'vue-router';
 
@@ -22,9 +22,8 @@ const reaction: Ref = ref({
     ticket_id: NaN,
 });
 
-const handleSubmit = async (data: any) => {
-    data.ticket_id = Number(route.params.id)
-    await reactionStore.actions.create(data)
+const handleSubmit = async (data: Reaction) => {
+    await reactionStore.actions.create(Number(route.params.id), data)
 };
 
 </script>

@@ -23,14 +23,14 @@ class ReactionController extends Controller
         return ReactionResource::collection($reactions);
     }
 
-    public function store(StoreReactionRequest $request) {
+    public function store(StoreReactionRequest $request, Ticket $ticket) {
         $arguments = array_merge($request->validated(), [
             'user_id' => $request->user()->id,
+            'ticket_id' => $ticket->id
         ]);
 
         $reaction = Reaction::create($arguments);
 
-        $ticket = $reaction->ticket;
         $ticket->creator->notify(new GotReaction($ticket));
         return new ReactionResource($reaction);
     }

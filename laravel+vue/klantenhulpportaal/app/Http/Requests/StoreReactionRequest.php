@@ -24,7 +24,6 @@ class StoreReactionRequest extends BaseFormRequest
     {
         return [
             'body' => 'required|string|min:3',
-            'ticket_id' => 'required|integer'
         ];
     }
 }
