@@ -9,13 +9,22 @@ use Illuminate\Auth\Access\Response;
 class TicketPolicy
 {
     /**
+     * Admin fall through for the policy
+     */
+    public function before(User $user): Response|null
+    {
+        return  $user->is_admin
+        ? Response::allow() 
+        : null ;
+    }
+
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized to do this');
+        return Response::allow();
     }
 
     /**
@@ -23,7 +32,7 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket): Response
     {
-        return $user->is_admin || $user->id === $ticket->creator_id
+        return $user->id === $ticket->creator_id
             ? Response::allow()
             : Response::deny('You do not own this post.');
     }
@@ -31,9 +40,9 @@ class TicketPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        return true;
+        return Response::allow();
     }
 
     /**
@@ -41,9 +50,27 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket): Response
     {
-        return $user->is_admin || $user->id === $ticket->creator_id
+        return $user->id === $ticket->creator_id
             ? Response::allow()
             : Response::deny('You do not own this post.');
+    }
+
+
+    /**
+     * Determine whether the user can assign and admin to the the model.
+     */
+    public function assignAdmin(): Response
+    {
+        return Response::deny();
+    }
+
+
+    /**
+     * Determine whether the user can change the status on the model
+     */
+    public function updateStatus(): Response
+    {
+        return Response::deny();
     }
 
     /**
@@ -51,7 +78,7 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket): Response
     {
-        return $user->is_admin || $user->id === $ticket->creator_id
+        return $user->id === $ticket->creator_id
             ? Response::allow()
             : Response::deny('You do not own this post.');
     }
@@ -61,9 +88,7 @@ class TicketPolicy
      */
     public function restore(User $user, Ticket $ticket): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized to do this');
+        return Response::deny('You are not authorized to do this');
     }
 
     /**
@@ -71,8 +96,6 @@ class TicketPolicy
      */
     public function forceDelete(User $user, Ticket $ticket): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized to do this');
+        return Response::deny('You are not authorized to do this');
     }
 }

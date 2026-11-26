@@ -9,21 +9,31 @@ use Illuminate\Auth\Access\Response;
 class ReactionPolicy
 {
     /**
+     * Admin Fall through for the policy
+     */
+    public function before(User $user): Response|null
+    {
+        return  $user->is_admin
+        ? Response::allow() 
+        : null ;
+    }    
+
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized');
+        return Response::allow();
     }
+
 
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Reaction $reaction): Response
     {
-        return $user->is_admin || $user->id === $reaction->user_id
+        return $user->id === $reaction->user_id
             ? Response::allow()
             : Response::deny('You are not authorized');
     }
@@ -33,9 +43,7 @@ class ReactionPolicy
      */
     public function create(User $user): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized');
+        return Response::deny('You are not authorized');
     }
 
     /**
@@ -43,9 +51,7 @@ class ReactionPolicy
      */
     public function update(User $user, Reaction $reaction): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized');
+        return Response::deny('You are not authorized');
     }
 
     /**
@@ -53,9 +59,7 @@ class ReactionPolicy
      */
     public function delete(User $user, Reaction $reaction): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized');
+        return Response::deny('You are not authorized');
     }
 
     /**
@@ -63,9 +67,7 @@ class ReactionPolicy
      */
     public function restore(User $user, Reaction $reaction): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized');
+        return Response::deny('You are not authorized');
     }
 
     /**
@@ -73,8 +75,6 @@ class ReactionPolicy
      */
     public function forceDelete(User $user, Reaction $reaction): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized');
+        return Response::deny('You are not authorized');
     }
 }

@@ -1,5 +1,5 @@
 import { ref, computed, Ref } from 'vue';
-import { deleteRequest, getRequest, postRequest, putRequest } from '../http';
+import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../http';
 
 export const storeModuleFactory = <T extends { id: number }>(moduleName: string) => {
     const state = ref<Record<string | number, Readonly<T>>>({});
@@ -43,7 +43,7 @@ export const storeModuleFactory = <T extends { id: number }>(moduleName: string)
         },
 
         update: async (id: number, item: Partial<T>) => {
-            const { data } = await putRequest(`${moduleName}/${id}`, item);
+            const { data } = await patchRequest(`${moduleName}/${id}`, item);
             if (!data) return;
             setters.set(data);
         },

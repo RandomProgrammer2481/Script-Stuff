@@ -41,12 +41,15 @@
         <div v-if="reactions">
             <div v-for="reaction in reactions">
                 <Edit :reaction="reaction" v-if="editingReactionId === reaction.id" @submitted="editingReactionId = null"></Edit>
-                <div v-else>
-                    <p>{{ reaction.user.name}} heeft gereageerd op {{ reaction.created_at }}</p>
-                    <p>{{ reaction.body }}</p>
-                    <button @click="editingReactionId = reaction.id">Edit</button>
-                </div>
+                <ReactionCard :reaction="reaction" @edit="editingReactionId = reaction.id"></ReactionCard>
             </div>
+        </div>
+        <br>
+        <div v-if="isAdmin">
+            <p class="font-semibold">Notes</p>
+            <NoteCreate :ticket-id="ticket_id"></NoteCreate>
+            <br>
+            <NoteIndex :ticket-id="ticket_id"></NoteIndex>
         </div>
     </div>
 </template>
@@ -60,6 +63,10 @@ import { userStore } from '../../users/store'
 import { statusStore } from '../../statuses/store'
 import Create from '../../reactions/components/Create.vue'
 import Edit from '../../reactions/components/Edit.vue'
+import ReactionCard from '../../reactions/components/ReactionCard.vue'
+import NoteIndex from '../../notes/components/NoteIndex.vue'
+import NoteCreate from '../../notes/components/NoteCreate.vue'
+
 
 const {isAdmin} = auth()
 const route = useRoute()
@@ -78,14 +85,14 @@ const editingReactionId = ref<number | null>(null)
 const handleAssigneeUpdate = async () => {
     if (selectedAdminId.value === null) return;
     await ticketStore.actions.assign(ticket_id, selectedAdminId.value);
-    await ticketStore.actions.fetchAll(); // refresh the tickets
+    await ticketStore.actions.fetchAll(); 
     
 };
 
 const handleStatusUpdate = async () => {
     if (selectedStatusId.value === null) return;
     await ticketStore.actions.updateStatus(ticket_id, selectedStatusId.value);
-    await ticketStore.actions.fetchAll(); // refresh the tickets
+    await ticketStore.actions.fetchAll(); 
 };
 
 watch(
@@ -94,12 +101,12 @@ watch(
     { immediate: true }
 )
 
-onMounted(() => {
+onMounted( async () => {
     if (isAdmin.value === true) {
-        userStore.actions.fetchAdmins()
-        statusStore.actions.fetchAll()
+        await userStore.actions.fetchAdmins()
+        await statusStore.actions.fetchAll()
     }
-    ticketStore.actions.fetchAll()
-    reactionStore.actions.fetchByTicketId(ticket_id)
+    await ticketStore.actions.fetchAll()
+    await reactionStore.actions.fetchByTicketId(ticket_id)
 });
 </script>

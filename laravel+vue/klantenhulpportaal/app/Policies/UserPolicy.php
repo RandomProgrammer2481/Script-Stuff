@@ -4,17 +4,35 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Laravel\Sanctum\Guard;
 
 class UserPolicy
 {
+    /**
+     * Admin fall through for the policy
+     */
+    public function before(User $user): Response|null
+    {
+        return  $user->is_admin
+        ? Response::allow() 
+        : null ;
+    } 
+
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized for this action');
+        return Response::deny('You are not authorized for this action');
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAdmins(User $user): Response
+    {
+        return Response::deny('You are not authorized for this action');
     }
 
     /**
@@ -22,7 +40,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): Response
     {
-        return $user->is_admin || $user === $model
+        return $user === $model
             ? Response::allow()
             : Response::deny('You are not authorized for this action');
     }
@@ -40,7 +58,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): Response
     {
-        return $user->is_admin || $user === $model
+        return $user === $model
             ? Response::allow()
             : Response::deny('You are not authorized for this action');
     }
@@ -50,7 +68,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): Response
     {
-        return $user->is_admin || $user === $model
+        return $user === $model
             ? Response::allow()
             : Response::deny('You are not authorized for this action');
     }
@@ -60,9 +78,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized for this action');
+        return Response::deny('You are not authorized for this action');
     }
 
     /**
@@ -70,8 +86,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): Response
     {
-        return $user->is_admin
-            ? Response::allow()
-            : Response::deny('You are not authorized for this action');
+        return Response::deny('You are not authorized for this action');
     }
 }

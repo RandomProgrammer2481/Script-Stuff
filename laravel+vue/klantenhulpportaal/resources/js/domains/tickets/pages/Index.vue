@@ -10,6 +10,7 @@
                 <th class="border border-gray-300 px-4 py-2">Aangemaakt op</th>
                 <th class="border border-gray-300 px-4 py-2">Laatste update op</th>
                 <th class="border border-gray-300 px-4 py-2">Toegewezen aan</th>
+                <th class="border border-gray-300 px-4 py-2">Acties</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +30,9 @@
                 <td class="border border-gray-300 px-4 py-2">{{ ticket.created_at }}</td>
                 <td class="border border-gray-300 px-4 py-2">{{ ticket.updated_at }}</td>
                 <td class="border border-gray-300 px-4 py-2">{{ ticket.assignee?.name }}</td>
+                <td class="border border-gray-300 px-4 py-2">
+                    <RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Edit</RouterLink>
+                </td>
             </tr>
         </tbody>
     </table>

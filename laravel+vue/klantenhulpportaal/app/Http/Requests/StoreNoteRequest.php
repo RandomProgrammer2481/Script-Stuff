@@ -12,7 +12,7 @@ class StoreNoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,6 @@ class StoreNoteRequest extends FormRequest
     {
         return [
             'body' => 'required|string|min:3',
-            'ticket_id' => 'required|integer'
         ];
     }
 }

@@ -24,6 +24,7 @@ export const router = createRouter({
 
 router.beforeEach(async (to) => {
     await fetchUser()
+    
     if (to.meta.public) return true
 
     if (isAuthenticated.value === false) {
